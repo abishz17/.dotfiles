@@ -112,3 +112,9 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/opt/homebrew/opt/mongodb-community@5.0/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+alias cnvim="cd $HOME/.config/nvim && nvim ."
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey -s ^f  "$HOME/.dotfiles/tmux-navigator.sh\n"
