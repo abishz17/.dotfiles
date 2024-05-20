@@ -118,3 +118,5 @@ alias cnvim="cd $HOME/.config/nvim && nvim ."
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 bindkey -s ^f  "$HOME/.dotfiles/tmux-navigator.sh\n"
+
+alias python="python3"
