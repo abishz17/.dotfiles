@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -n "$TMUX" ]; then
-  session=$(find ~  ~/personal ~/raralabs -mindepth 1 -maxdepth 1 -type d | fzf)
+  session=$(find ~  ~/personal ~/work -mindepth 1 -maxdepth 1 -type d | fzf)
   session_name=$(basename "$session" | tr . _)
 
   if ! tmux has-session -t "$session_name" 2> /dev/null; then
