@@ -8,3 +8,4 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "number"
 vim.opt.smartindent = true
+vim.cmd("set nowrap")

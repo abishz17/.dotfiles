@@ -120,3 +120,11 @@ alias cnvim="cd $HOME/.config/nvim && nvim ."
 bindkey -s ^f  "$HOME/.dotfiles/tmux-navigator.sh\n"
 
 alias python="python3"
+
+export PATH=$PATH:$(go env GOPATH)/bin
+
+alias vim="nvim"
+
+export PATH=$PATH:/Users/abish/Library/Python/3.9/bin
+
+. "/Users/abish/.deno/env"
