@@ -15,11 +15,6 @@ config.keys = {
     action = act.SpawnTab 'DefaultDomain',
   },
   {
-    key = 'f',
-    mods = 'CMD',
-    action = act.ToggleFullScreen,
-  },
-  {
     key = 'Enter',
     mods = 'CMD',
     action = act.ToggleFullScreen,
@@ -65,6 +60,25 @@ config.keys = {
     key = ']',
     mods = 'CMD',
     action = act.ActivateTabRelative(1),
+  },
+  -- This will create a new split and run the `top` program inside it
+  {
+    key = '-',
+    mods = 'CMD',
+    action = act.SplitPane {
+      direction = 'Left',
+      size = { Percent = 50 },
+    },
+  },
+  {
+    key = 'n',
+    mods = 'CMD',
+    action = act { ActivatePaneDirection = "Next" },
+  },
+  {
+    key = 'p',
+    mods = 'CMD',
+    action = act { ActivatePaneDirection = "Prev" },
   },
 }
 
@@ -121,10 +135,10 @@ config.line_height = 1.2
 config.window_background_opacity = 0.95
 config.window_decorations = "RESIZE"
 config.window_padding = {
-  left = 25,
-  right = 25,
-  top = 25,
-  bottom = 25,
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
 }
 
 -- Tab bar configuration
@@ -147,5 +161,8 @@ config.window_close_confirmation = 'NeverPrompt'
 -- Performance settings
 config.front_end = "WebGpu"
 config.webgpu_power_preference = "HighPerformance"
+
+config.native_macos_fullscreen_mode = true
+config.max_fps = 120
 
 return config
