@@ -9,3 +9,5 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = "number"
 vim.opt.smartindent = true
 vim.cmd("set nowrap")
+vim.keymap.set('n', '<C-S-k>', '<cmd>m -2<CR>')
+vim.keymap.set('n', '<C-S-j>', '<cmd>m +1<CR>')

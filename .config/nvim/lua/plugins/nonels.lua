@@ -10,6 +10,8 @@ return {
         null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.gofumpt,
         null_ls.builtins.formatting.goimports,
+        null_ls.builtins.formatting.ocamlformat,
+        null_ls.builtins.diagnostics.cppcheck,
       },
       timeout = 5000,
       on_attach = function(client, bufnr)
@@ -27,6 +29,6 @@ return {
         end
       end,
     })
-    vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, {})
   end,
 }
