@@ -151,6 +151,7 @@ config.default_cursor_style = 'BlinkingBar'
 config.cursor_blink_rate = 800
 config.animation_fps = 60
 
+
 -- General UI configuration
 config.enable_scroll_bar = false
 config.scrollback_lines = 10000
