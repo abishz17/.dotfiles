@@ -1,4 +1,4 @@
-#Installation
+# Installation
 
 Clone the repo to home directory , cd into it  and then execute the following command:
 
