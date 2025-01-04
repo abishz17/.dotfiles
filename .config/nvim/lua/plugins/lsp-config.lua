@@ -10,7 +10,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "gopls", "pyright", "rust_analyzer", "clangd", "ts_ls" },
+        ensure_installed = { "lua_ls", "gopls", "pyright", "rust_analyzer", "clangd", "ts_ls", "tailwindcss" },
       })
     end,
   },
@@ -18,10 +18,22 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       local util = require("lspconfig/util")
       local lspconfig = require("lspconfig")
       lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.sqlls.setup({
+        capabilities = capabilities,
+        filetypes = { "sql" },
+        root_dir = function(_)
+          return vim.loop.cwd()
+        end,
+      })
+
+      lspconfig.tailwindcss.setup({
         capabilities = capabilities,
       })
 
