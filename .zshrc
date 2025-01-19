@@ -130,7 +130,7 @@ export PATH=$PATH:/Users/abish/Library/Python/3.9/bin
 . "/Users/abish/.deno/env"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-alias db="PGPASSWORD=password psql -h localhost -U postgres -d pos"
+alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 
 
 # BEGIN opam configuration
