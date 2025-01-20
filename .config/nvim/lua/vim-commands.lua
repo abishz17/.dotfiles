@@ -12,8 +12,12 @@ vim.cmd("set nowrap")
 vim.keymap.set("n", "<C-S-k>", "<cmd>m -2<CR>")
 vim.keymap.set("n", "<C-S-j>", "<cmd>m +1<CR>")
 vim.lsp.set_log_level("debug")
+vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
-vim.keymap.set("n", "<leader>e", function()
+vim.keymap.set("n", "<leader>ef", function()
   local diagnostics = vim.diagnostic.get(0) -- `0` is the current buffer
 
   if vim.tbl_isempty(diagnostics) then
@@ -46,10 +50,18 @@ vim.keymap.set("n", "<leader>e", function()
     border = "rounded",
   }
 
-  -- Open the floating window
   vim.api.nvim_open_win(buf, true, opts)
 
-  -- Add optional keymap to close the window
   vim.api.nvim_buf_set_keymap(buf, "n", "q", ":close<CR>", { noremap = true, silent = true })
   vim.api.nvim_buf_set_option(buf, "modifiable", false)
 end, { desc = "Show diagnostics in a floating window with red errors" })
+
+--Quick fix list navigation
+
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
+
+--Put all errors in a quickfix list
+vim.keymap.set("n", "<leader>ew", function()
+  vim.diagnostic.setqflist()
+end)
