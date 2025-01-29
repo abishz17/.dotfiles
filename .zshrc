@@ -141,4 +141,6 @@ alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 [[ ! -r '/Users/abish/.opam/opam-init/init.zsh' ]] || source '/Users/abish/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
 #
-bindkey -v
+
+
+
