@@ -27,14 +27,6 @@ return {
 				capabilities = capabilities,
 			})
 
-			lspconfig.sqlls.setup({
-				capabilities = capabilities,
-				filetypes = { "sql" },
-				root_dir = function(_)
-					return vim.loop.cwd()
-				end,
-			})
-
 			lspconfig.tailwindcss.setup({
 				capabilities = capabilities,
 			})

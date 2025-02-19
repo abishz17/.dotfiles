@@ -107,8 +107,9 @@ return {
     },
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
-      cmdline = {},
+      -- cmdline = {},
     },
+    cmdline = { enabled = false },
   },
   opts_extend = { "sources.default" },
 }
