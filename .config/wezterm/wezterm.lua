@@ -10,6 +10,17 @@ local theme = wezterm.plugin.require("https://github.com/neapsix/wezterm").main
 config.colors = theme.colors()
 config.window_frame = theme.window_frame()
 
+-- local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
+-- bar.apply_to_config(config)
+--
+--
+
+wezterm.plugin.require("https://github.com/yriveiro/wezterm-tabs").apply_to_config(config, {
+	tabs = {
+		tab_bar_at_bottom = false,
+		hide_tab_bar_if_only_one_tab = false,
+	},
+})
 config.keys = {
 	{
 		key = "t",

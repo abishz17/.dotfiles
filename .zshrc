@@ -144,3 +144,6 @@ alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 
 
 
+
+# Added by Windsurf
+export PATH="/Users/abish/.codeium/windsurf/bin:$PATH"
