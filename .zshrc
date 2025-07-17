@@ -124,6 +124,7 @@ alias python="python3"
 export PATH=$PATH:$(go env GOPATH)/bin
 
 alias vim="nvim"
+alias lg="lazygit"
 
 export PATH=$PATH:/Users/abish/Library/Python/3.9/bin
 
@@ -147,3 +148,5 @@ alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 
 # Added by Windsurf
 export PATH="/Users/abish/.codeium/windsurf/bin:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
