@@ -85,6 +85,10 @@ return {
     -- C, C++, Rust
 
     require("dap-go").setup({
+
+      delve = {
+        args = { "--check-go-version=false" },
+      },
       -- Set up the Go adapter
       dap_configurations = {
         {
