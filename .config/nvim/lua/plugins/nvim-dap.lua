@@ -1,5 +1,6 @@
 return {
   "mfussenegger/nvim-dap",
+  dir = "/Users/abish/personal/nvim-dap",
   dependencies = {
     -- Runs preLaunchTask / postDebugTask if present
     { "stevearc/overseer.nvim", config = true },
@@ -85,10 +86,6 @@ return {
     -- C, C++, Rust
 
     require("dap-go").setup({
-
-      delve = {
-        args = { "--check-go-version=false" },
-      },
       -- Set up the Go adapter
       dap_configurations = {
         {
