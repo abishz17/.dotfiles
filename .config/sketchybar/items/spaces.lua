@@ -6,17 +6,18 @@ local app_icons = require("helpers.app_icons")
 local spaces = {}
 
 for i = 1, 10, 1 do
-  local space = sbar.add("space", "space." .. i, {
+  -- Use regular "item" instead of "space" for macOS 26.0 compatibility
+  local space = sbar.add("item", "space." .. i, {
     icon = {
       font = { family = settings.font.numbers },
       string = i,
-      padding_left = 15,
-      padding_right = 8,
+      padding_left = 8,
+      padding_right = 4,
       color = colors.white,
       highlight_color = colors.red,
     },
     label = {
-      padding_right = 20,
+      padding_right = 8,
       color = colors.grey,
       highlight_color = colors.white,
       font = "sketchybar-app-font:Regular:16.0",
@@ -25,10 +26,10 @@ for i = 1, 10, 1 do
     padding_right = 1,
     padding_left = 1,
     background = {
-      color = colors.bg1,
+      color = colors.transparent,
       border_width = 1,
       height = 26,
-      border_color = colors.black,
+      border_color = colors.red,
     },
     popup = { background = { border_width = 5, border_color = colors.black } }
   })
@@ -45,10 +46,10 @@ for i = 1, 10, 1 do
     }
   })
 
-  -- Padding space
-  sbar.add("space", "space.padding." .. i, {
+  -- Padding space (using regular item for macOS 26.0 compatibility)
+  sbar.add("item", "space.padding." .. i, {
     script = "",
-    width = settings.group_paddings,
+    width = 2,
   })
 
   local space_popup = sbar.add("item", {
@@ -64,8 +65,8 @@ for i = 1, 10, 1 do
     }
   })
 
-  space:subscribe("space_change", function(env)
-    local selected = env.SELECTED == "true"
+  space:subscribe("aerospace_workspace_change", function(env)
+    local selected = env.FOCUSED_WORKSPACE == tostring(i)
     local color = selected and colors.grey or colors.bg2
     space:set({
       icon = { highlight = selected, },
@@ -79,11 +80,10 @@ for i = 1, 10, 1 do
 
   space:subscribe("mouse.clicked", function(env)
     if env.BUTTON == "other" then
-      space_popup:set({ background = { image = "space." .. env.SID } })
+      space_popup:set({ background = { image = "space." .. i } })
       space:set({ popup = { drawing = "toggle" } })
     else
-      local op = (env.BUTTON == "right") and "--destroy" or "--focus"
-      sbar.exec("yabai -m space " .. op .. " " .. env.SID)
+      sbar.exec("aerospace workspace " .. i)
     end
   end)
 
@@ -96,6 +96,49 @@ local space_window_observer = sbar.add("item", {
   drawing = false,
   updates = true,
 })
+
+-- Function to update workspace apps using aerospace
+local function update_workspace_apps()
+  sbar.exec("aerospace list-windows --all --format '%{workspace},%{app-name}'", function(result)
+    -- Clear all workspace labels first
+    for j = 1, 10 do
+      spaces[j]:set({ label = " —" })
+    end
+    
+    -- Parse aerospace output and group apps by workspace
+    local workspace_apps = {}
+    for line in result:gmatch("[^\r\n]+") do
+      local workspace, app = line:match("^(%d+),(.+)$")
+      if workspace and app then
+        workspace = tonumber(workspace)
+        if workspace and workspace >= 1 and workspace <= 10 then
+          if not workspace_apps[workspace] then
+            workspace_apps[workspace] = {}
+          end
+          workspace_apps[workspace][app] = true
+        end
+      end
+    end
+    
+    -- Update labels for each workspace
+    for workspace_num, apps in pairs(workspace_apps) do
+      local icon_line = ""
+      for app, _ in pairs(apps) do
+        local lookup = app_icons[app]
+        local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+        icon_line = icon_line .. icon
+      end
+      
+      if icon_line == "" then
+        icon_line = " —"
+      end
+      
+      sbar.animate("tanh", 10, function()
+        spaces[workspace_num]:set({ label = icon_line })
+      end)
+    end
+  end)
+end
 
 local spaces_indicator = sbar.add("item", {
   padding_left = -3,
@@ -119,23 +162,18 @@ local spaces_indicator = sbar.add("item", {
   }
 })
 
-space_window_observer:subscribe("space_windows_change", function(env)
-  local icon_line = ""
-  local no_app = true
-  for app, count in pairs(env.INFO.apps) do
-    no_app = false
-    local lookup = app_icons[app]
-    local icon = ((lookup == nil) and app_icons["Default"] or lookup)
-    icon_line = icon_line .. icon
-  end
-
-  if (no_app) then
-    icon_line = " —"
-  end
-  sbar.animate("tanh", 10, function()
-    spaces[env.INFO.space]:set({ label = icon_line })
-  end)
+-- Subscribe to aerospace workspace change and update periodically
+space_window_observer:subscribe("aerospace_workspace_change", function(env)
+  update_workspace_apps()
 end)
+
+-- Update apps periodically (every 2 seconds)
+space_window_observer:subscribe("routine", function(env)
+  update_workspace_apps()
+end)
+
+-- Initial update
+update_workspace_apps()
 
 spaces_indicator:subscribe("swap_menus_and_spaces", function(env)
   local currently_on = spaces_indicator:query().icon.value == icons.switch.on

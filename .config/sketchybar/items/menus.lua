@@ -73,4 +73,9 @@ space_menu_swap:subscribe("swap_menus_and_spaces", function(env)
   end
 end)
 
+-- Initialize with spaces visible by default
+sbar.set("/menu\\..*/", { drawing = false })
+sbar.set("/space\\..*/", { drawing = true })
+sbar.set("front_app", { drawing = true })
+
 return menu_watcher
