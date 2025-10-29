@@ -10,7 +10,7 @@ return {
         null_ls.builtins.formatting.gofumpt,
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.ocamlformat,
-        null_ls.builtins.diagnostics.cppcheck,
+        null_ls.builtins.formatting.clang_format,
       },
       timeout = 5000,
       on_attach = function(client, bufnr)

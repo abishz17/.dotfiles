@@ -34,6 +34,8 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities({
 				textDocument = { completion = { completionItem = { snippetSupport = false } } },
 			})
+
+
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
@@ -47,6 +49,10 @@ return {
 			})
 
 			lspconfig.clangd.setup({
+        cmd = {
+          "clangd",
+          "--header-insertion=never",
+        },
 				capabilities = capabilities,
 			})
 
@@ -110,10 +116,7 @@ return {
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-			vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, {})
 			vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, {})
-			vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, {})
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
 		end,
 	},
 	{

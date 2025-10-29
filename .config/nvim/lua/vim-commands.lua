@@ -18,8 +18,20 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 vim.diagnostic.config({ virtual_text = true })
+--
+--  vim.diagnostic.config({
+--   virtual_text = {
+--     severity = { min = vim.diagnostic.severity.ERROR },
+--   },
+--   underline = {
+--     severity = { min = vim.diagnostic.severity.WARN },
+--   },
+--   signs = true,
+--   update_in_insert = false,
+-- })
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
 
 vim.keymap.set("n", "<leader>ef", function()
 	local diagnostics = vim.diagnostic.get(0) -- `0` is the current buffer
@@ -77,3 +89,15 @@ vim.keymap.set("n", "<leader><leader>v", function()
 		vim.cmd("DiffviewClose")
 	end
 end)
+
+
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+    end
+  end,
+})
+

@@ -49,12 +49,13 @@ config.macos_window_background_blur = 10
 config.window_decorations = "RESIZE"
 config.use_fancy_tab_bar = false
 config.max_fps = 120
-config.native_macos_fullscreen_mode = false
+config.native_macos_fullscreen_mode = true
 config.animation_fps = 60
 
 --Performance settings
 config.front_end = "WebGpu"
 config.webgpu_power_preference = "HighPerformance"
+
 
 
 config.keys = {

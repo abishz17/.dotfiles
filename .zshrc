@@ -125,6 +125,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 alias vim="nvim"
 alias lg="lazygit"
+alias cat="lolcat"
 
 export PATH=$PATH:/Users/abish/Library/Python/3.9/bin
 
@@ -150,3 +151,22 @@ alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 export PATH="/Users/abish/.codeium/windsurf/bin:$PATH"
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# bun completions
+[ -s "/Users/abish/.bun/_bun" ] && source "/Users/abish/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="/opt/homebrew/bin:$PATH"
+
+
+
+
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"

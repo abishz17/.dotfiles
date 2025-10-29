@@ -23,7 +23,7 @@ return {
       desc = "DAP Hover",
     },
     { "<F4>", "<CMD>DapTerminate<CR>", desc = "DAP Terminate" },
-    { "<F5>", "<CMD>DapContinue<CR>",  desc = "DAP Continue" },
+    { "<leader>dr", "<CMD>DapContinue<CR>",  desc = "DAP Continue" },
     {
       "<F6>",
       function()
@@ -31,7 +31,7 @@ return {
       end,
       desc = "Run to Cursor",
     },
-    { "<F9>",  "<CMD>DapToggleBreakpoint<CR>", desc = "Toggle Breakpoint" },
+    { "<leader>db",  "<CMD>DapToggleBreakpoint<CR>", desc = "Toggle Breakpoint" },
     { "<F10>", "<CMD>DapStepOver<CR>",         desc = "Step Over" },
     { "<F11>", "<CMD>DapStepInto<CR>",         desc = "Step Into" },
     { "<F12>", "<CMD>DapStepOut<CR>",          desc = "Step Out" },
@@ -84,6 +84,34 @@ return {
 
     -- Adapters
     -- C, C++, Rust
+    --
+    local dap = require("dap")
+    dap.adapters.codelldb = {
+      type = "server",
+      port = "${port}",
+      executable = {
+        -- Mason-installed path
+        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+        args = { "--port", "${port}" },
+      },
+    }
+
+    dap.configurations.cpp = {
+      {
+        name = "Launch file (CodeLLDB)",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+        args = {},
+      },
+    }
+
+    dap.configurations.c = dap.configurations.cpp
+
 
     require("dap-go").setup({
       -- Set up the Go adapter

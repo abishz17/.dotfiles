@@ -5,7 +5,7 @@ local app_icons = require("helpers.app_icons")
 
 local spaces = {}
 
-for i = 1, 10, 1 do
+for i = 1, 9, 1 do
   -- Use regular "item" instead of "space" for macOS 26.0 compatibility
   local space = sbar.add("item", "space." .. i, {
     icon = {
@@ -101,7 +101,7 @@ local space_window_observer = sbar.add("item", {
 local function update_workspace_apps()
   sbar.exec("aerospace list-windows --all --format '%{workspace},%{app-name}'", function(result)
     -- Clear all workspace labels first
-    for j = 1, 10 do
+    for j = 1, 9 do
       spaces[j]:set({ label = " —" })
     end
     
