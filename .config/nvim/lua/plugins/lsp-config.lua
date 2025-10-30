@@ -1,5 +1,4 @@
 return {
-
 	{
 		"mason-org/mason.nvim",
 		config = function()
@@ -25,92 +24,90 @@ return {
 			})
 		end,
 	},
-
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			local util = require("lspconfig/util")
-			local lspconfig = require("lspconfig")
+			-- Get capabilities from blink.cmp
 			local capabilities = require("blink.cmp").get_lsp_capabilities({
 				textDocument = { completion = { completionItem = { snippetSupport = false } } },
 			})
 
-
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.pyright.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.clangd.setup({
-        cmd = {
-          "clangd",
-          "--header-insertion=never",
-        },
-				capabilities = capabilities,
-			})
-
-			lspconfig.dockerls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.bashls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.sqlls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.yamlls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.gopls.setup({
-
-				capabilities = capabilities,
-				cmd = { "gopls" },
-				filetypes = { "go", "gomod", "gowork", "gotmpl" },
-				root_dir = util.root_pattern("go.work", "go.mod", "git"),
-				settings = {
-					gopls = {
-						completeUnimported = true,
-						usePlaceholders = true,
-						analyses = {
-							unusedparams = true,
+			-- List of language servers to configure
+			local servers = {
+				{ "lua_ls" },
+				{ "tailwindcss" },
+				{ "pyright" },
+				{
+					"clangd",
+					{
+						cmd = {
+							"clangd",
+							"--header-insertion=never",
 						},
 					},
 				},
-			})
-
-			lspconfig.rust_analyzer.setup({
-				capabilities = capabilities,
-				filetypes = { "rust" },
-				root_dir = util.root_pattern("cargo.toml"),
-				settings = {
-					["rust_analyzer"] = {
-						cargo = {
-							allFeatures = true,
+				{ "dockerls" },
+				{ "bashls" },
+				{ "sqlls" },
+				{ "yamlls" },
+				{
+					"gopls",
+					{
+						cmd = { "gopls" },
+						filetypes = { "go", "gomod", "gowork", "gotmpl" },
+						root_dir = function(fname)
+							local util = require("lspconfig.util")
+							return util.root_pattern("go.work", "go.mod", ".git")(fname)
+						end,
+						settings = {
+							gopls = {
+								completeUnimported = true,
+								usePlaceholders = true,
+								analyses = {
+									unusedparams = true,
+								},
+							},
 						},
-						checkOnSave = {
-							command = "clippy",
-						},
-						rustfmt = {},
 					},
 				},
-			})
+				{
+					"rust_analyzer",
+					{
+						filetypes = { "rust" },
+						root_dir = function(fname)
+							local util = require("lspconfig.util")
+							return util.root_pattern("Cargo.toml")(fname)
+						end,
+						settings = {
+							["rust-analyzer"] = {
+								cargo = {
+									allFeatures = true,
+								},
+								checkOnSave = {
+									command = "clippy",
+								},
+								rustfmt = {},
+							},
+						},
+					},
+				},
+				{ "ts_ls" },
+				{ "ocamllsp" },
+			}
 
-			lspconfig.ts_ls.setup({
-				capabilities = capabilities,
-			})
 
-			lspconfig.ocamllsp.setup({
-				capabilities = capabilities,
-			})
+			for _, server in ipairs(servers) do
+				local name = server[1]
+				local config = server[2] or {}
+
+				config.capabilities = capabilities
+
+				vim.lsp.config(name, config)
+
+				vim.lsp.enable(name)
+			end
+
+			-- Set up keymaps
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
