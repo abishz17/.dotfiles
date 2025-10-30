@@ -54,11 +54,6 @@ return {
 					"gopls",
 					{
 						cmd = { "gopls" },
-						filetypes = { "go", "gomod", "gowork", "gotmpl" },
-						root_dir = function(fname)
-							local util = require("lspconfig.util")
-							return util.root_pattern("go.work", "go.mod", ".git")(fname)
-						end,
 						settings = {
 							gopls = {
 								completeUnimported = true,
