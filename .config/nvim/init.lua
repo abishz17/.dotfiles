@@ -19,7 +19,3 @@ require("lazy").setup({ import = "plugins" }, {
   },
 })
 
-require("my_plugins.swagger_gen")
-vim.api.nvim_create_user_command("GenerateSwagger", function()
-  require("my_plugins.swagger_gen").generate_swagger_docs()
-end, {})

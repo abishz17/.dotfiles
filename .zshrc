@@ -127,7 +127,7 @@ alias vim="nvim"
 alias lg="lazygit"
 alias cat="lolcat"
 
-export PATH=$PATH:/Users/abish/Library/Python/3.9/bin
+export PATH=$PATH:/Users/abish/Library/Python/3.14/bin
 
 . "/Users/abish/.deno/env"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
@@ -170,3 +170,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/abish/.antigravity/antigravity/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
