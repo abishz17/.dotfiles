@@ -117,7 +117,7 @@ alias cnvim="cd $HOME/.config/nvim && nvim ."
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-bindkey -s ^f  "$HOME/.dotfiles/tab-navigator.sh\n"
+# bindkey -s ^f  "$HOME/.dotfiles/tab-navigator.sh\n"
 
 alias python="python3"
 
@@ -175,3 +175,18 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/Users/abish/.antigravity/antigravity/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
+
+# Kitty Theme Switcher (Paul Nameless Style)
+alias kt="cd ~/.config/kitty/themes/themes && fzf --preview 'head -n 40 {} && kitty @ set-colors -a -c {}' && cd -"
+
+# Kitty icat alias
+alias icat="kitty +kitten icat"
+
+
+
+# Sessionizer — Ctrl+F to launch
+sessionizer() {
+  tv sessionizer
+}
+bindkey -s '^f' 'sessionizer\n'   # zsh
+# For bash: bind -x '"\C-f": sessionizer'

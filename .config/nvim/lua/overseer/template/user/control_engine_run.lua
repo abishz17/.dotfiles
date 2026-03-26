@@ -11,7 +11,6 @@ return {
         "ce-lsp",
         "./control_engine",
         "./testExtensions",
-        "-x", "demo",
         "-p", "../CE-Ext-Modbus/output",
       },
       components = {

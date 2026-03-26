@@ -11,7 +11,7 @@ return {
         "ce-lsp",
         "bash",
         "-c",
-        "cd /tmp/control-engine && cmake --build cmake-build-debug-docker && cd cmake-build-debug-docker && ./control_engine ./testExtensions -x demo -p ../CE-Ext-Modbus/output",
+        "cd /tmp/control-engine && cmake --build cmake-build-debug-docker && cd cmake-build-debug-docker && ./control_engine ./testExtensions -x inspector",
       },
       components = {
         { "on_output_quickfix", open = true },

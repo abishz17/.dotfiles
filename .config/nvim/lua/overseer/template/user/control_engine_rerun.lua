@@ -11,7 +11,7 @@ return {
         "ce-lsp",
         "bash",
         "-c",
-        "pkill -9 control_engine 2>/dev/null || true && ./control_engine ./testExtensions -x demo -p ../CE-Ext-Modbus/output",
+        "pkill -9 control_engine 2>/dev/null || true && ./control_engine ./testExtensions -p ../CE-Ext-Modbus/output",
       },
       components = {
         { "on_output_quickfix", open = true },
