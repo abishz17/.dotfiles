@@ -1,11 +1,8 @@
--- Enable faster Lua module loading (recommended by vim.pack guide)
 vim.loader.enable()
 
--- Load base vim settings and keymaps
+require("vim._core.ui2").enable({})
 require("vim-commands")
 
--- Define hooks for plugins that need build steps.
--- IMPORTANT: This must come BEFORE any vim.pack.add() call (per the article).
 vim.api.nvim_create_autocmd('PackChanged', { callback = function(ev)
   local name, kind = ev.data.spec.name, ev.data.kind
 
@@ -28,5 +25,3 @@ vim.api.nvim_create_autocmd('PackChanged', { callback = function(ev)
   end
 end })
 
--- All plugin files live in plugin/ and are auto-sourced alphabetically by Neovim.
--- No further setup needed here.
