@@ -1,7 +1,12 @@
--- Snacks.nvim (notifier, dashboard, image, lazygit, git, etc.)
 vim.pack.add({ 'https://github.com/folke/snacks.nvim' })
 
 require("snacks").setup({
+  bigfile = { enabled = true },    -- Disable heavy features for large files
+  quickfile = { enabled = true },  -- Fast render before plugins load
+  input = { enabled = true },      -- Better vim.ui.input (rename dialogs etc.)
+  scroll = { enabled = true },     -- Smooth scrolling (replaces neoscroll)
+  indent = { enabled = true },     -- Indent guides with scope highlighting
+  -- words = { enabled = true },      -- LSP word references highlighting
   notifier = {
     enabled = true,
     timeout = 3000,
