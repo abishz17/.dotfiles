@@ -1,0 +1,56 @@
+[metadata]
+name = "sessionizer"
+description = "Jump to any project in a new terminal tab"
+
+[source]
+command = """
+find ~ ~/personal ~/work -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+"""
+
+[preview]
+command = """
+repo='{}'
+
+# Get branch
+branch=$(git -C "$repo" branch --show-current 2>/dev/null)
+
+read ahead behind < <(
+  git -C "$repo" rev-list --left-right --count HEAD...@{upstream} 2>/dev/null || echo "0 0"
+)
+
+stashes=$(git -C "$repo" stash list 2>/dev/null | wc -l | awk '{print $1}')
+
+ab=""
+[ "$ahead" != "0" ] && ab="${ab} +${ahead}"
+[ "$behind" != "0" ] && ab="${ab} -${behind}"
+
+stash_info=""
+[ "$stashes" != "0" ] && stash_info=" | ${stashes} stash(es)"
+
+printf "\\x1b[1;36m %s\\x1b[0m\\x1b[33m%s\\x1b[0m%s\\n\\n" "$branch" "$ab" "$stash_info"
+
+# One combined view instead of separate mental load
+git -C "$repo" -c color.status=always --no-pager \
+  log --oneline --color=always -8 2>/dev/null
+
+echo ''
+
+git -C "$repo" -c color.status=always status --short 2>/dev/null
+"""
+
+[keybindings]
+enter = "actions:open"
+ctrl-o = "actions:opencode"
+ctrl-s = "actions:split"
+
+[actions.open]
+command = "~/.local/bin/sessionizer-open.sh '{}'"
+mode = "execute"
+
+[actions.opencode]
+command = "~/.local/bin/sessionizer-open.sh --opencode '{}'"
+mode = "execute"
+
+[actions.split]
+command = "~/.local/bin/sessionizer-open.sh --split '{}'"
+mode = "execute"
