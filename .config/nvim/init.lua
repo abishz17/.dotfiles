@@ -1,38 +1,32 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+-- Enable faster Lua module loading (recommended by vim.pack guide)
+vim.loader.enable()
 
--- HACK: Workaround for neovim/neovim#38466
--- treesitter.get_range crashes with nil node; remove after updating to a fixed Neovim release
-local ts_ok, ts = pcall(require, "vim.treesitter")
-if ts_ok and ts.get_range then
-  local original_get_range = ts.get_range
-  ts.get_range = function(node, source, metadata)
-    if not node then
-      return { 0, 0, 0, 0, 0, 0 }
-    end
-    local ok, result = pcall(original_get_range, node, source, metadata)
-    if ok then
-      return result
-    end
-    return { 0, 0, 0, 0, 0, 0 }
-  end
-end
-
+-- Load base vim settings and keymaps
 require("vim-commands")
--- require("lazy").setup("plugins")
-require("lazy").setup({ import = "plugins" }, {
-  change_detection = {
-    notify = false,
-  },
-})
 
+-- Define hooks for plugins that need build steps.
+-- IMPORTANT: This must come BEFORE any vim.pack.add() call (per the article).
+vim.api.nvim_create_autocmd('PackChanged', { callback = function(ev)
+  local name, kind = ev.data.spec.name, ev.data.kind
+
+  -- Treesitter: update parsers on install/update
+  if name == 'nvim-treesitter' and (kind == 'install' or kind == 'update') then
+    if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+    vim.cmd('TSUpdate')
+  end
+
+  -- telescope-fzf-native: run `make` on install/update
+  if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
+    local path = vim.fn.stdpath('data') .. '/site/pack/core/opt/telescope-fzf-native.nvim'
+    vim.fn.system({ 'make', '-C', path })
+  end
+
+  -- blink.cmp: run `cargo build --release` on install/update
+  if name == 'blink.cmp' and (kind == 'install' or kind == 'update') then
+    local path = vim.fn.stdpath('data') .. '/site/pack/core/opt/blink.cmp'
+    vim.fn.system('cd ' .. vim.fn.shellescape(path) .. ' && cargo build --release')
+  end
+end })
+
+-- All plugin files live in plugin/ and are auto-sourced alphabetically by Neovim.
+-- No further setup needed here.
