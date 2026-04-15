@@ -1,6 +1,39 @@
 return {
   "saghen/blink.cmp",
-  dependencies = { "rafamadriz/friendly-snippets", "xzbdmw/colorful-menu.nvim" },
+  dependencies = {
+    "rafamadriz/friendly-snippets",
+    {
+      "xzbdmw/colorful-menu.nvim",
+      config = function()
+        require("colorful-menu").setup({
+          ls = {
+            ["rust-analyzer"] = {
+              extra_info_hl = "@comment",
+              align_type_to_right = true,
+              preserve_type_when_truncate = true,
+            },
+            lua_ls = {
+              arguments_hl = "@comment",
+            },
+            gopls = {
+              align_type_to_right = true,
+              preserve_type_when_truncate = true,
+            },
+            clangd = {
+              extra_info_hl = "@comment",
+              align_type_to_right = true,
+              preserve_type_when_truncate = true,
+            },
+            ts_ls = {
+              extra_info_hl = "@comment",
+            },
+            fallback = true,
+          },
+          max_width = 60,
+        })
+      end,
+    },
+  },
   version = "*",
   opts = {
     keymap = {
@@ -64,33 +97,24 @@ return {
     completion = {
       menu = {
         draw = {
+          -- We don't need label_description now because label and label_description are already
+          -- combined together in label by colorful-menu.nvim.
+          columns = { { "kind_icon" }, { "label", gap = 1 } },
           components = {
             label = {
-              width = { fill = true, max = 60 },
               text = function(ctx)
-                local highlights_info = require("colorful-menu").highlights(ctx.item, vim.bo.filetype)
-                if highlights_info ~= nil then
-                  return highlights_info.text
-                else
-                  return ctx.label
+                local ok, text = pcall(require("colorful-menu").blink_components_text, ctx)
+                if ok then
+                  return text
                 end
+                return ctx.label
               end,
               highlight = function(ctx)
-                local highlights_info = require("colorful-menu").highlights(ctx.item, vim.bo.filetype)
-                local highlights = {}
-                if highlights_info ~= nil then
-                  for _, info in ipairs(highlights_info.highlights) do
-                    table.insert(highlights, {
-                      info.range[1],
-                      info.range[2],
-                      group = ctx.deprecated and "BlinkCmpLabelDeprecated" or info[1],
-                    })
-                  end
+                local ok, highlight = pcall(require("colorful-menu").blink_components_highlight, ctx)
+                if ok then
+                  return highlight
                 end
-                for _, idx in ipairs(ctx.label_matched_indices) do
-                  table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
-                end
-                return highlights
+                return {}
               end,
             },
           },

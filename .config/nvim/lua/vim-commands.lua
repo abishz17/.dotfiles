@@ -12,7 +12,6 @@ vim.opt.ignorecase = true
 vim.cmd("set nowrap")
 vim.keymap.set("n", "<C-S-k>", "<cmd>m -2<CR>")
 vim.keymap.set("n", "<C-S-j>", "<cmd>m +1<CR>")
-vim.lsp.set_log_level("debug")
 vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })

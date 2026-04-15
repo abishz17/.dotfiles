@@ -13,7 +13,6 @@ return {
           "lua_ls",
           "gopls",
           "pyright",
-          "rust_analyzer",
           "clangd",
           "ts_ls",
           "tailwindcss",
@@ -66,31 +65,11 @@ return {
                 analyses = {
                   unusedparams = true,
                 },
-             },
-            },
-          },
-        },
-        {
-          "rust_analyzer",
-          {
-            filetypes = { "rust" },
-            root_dir = function(fname)
-              local util = require("lspconfig.util")
-              return util.root_pattern("Cargo.toml")(fname)
-            end,
-            settings = {
-              ["rust-analyzer"] = {
-                cargo = {
-                  allFeatures = true,
-                },
-                checkOnSave = {
-                  command = "clippy",
-                },
-                rustfmt = {},
               },
             },
           },
         },
+
         { "ts_ls" },
         { "ocamllsp" },
       }
@@ -106,6 +85,9 @@ return {
 
         vim.lsp.enable(name)
       end
+
+      -- Disable rust_analyzer here; rustaceanvim manages it
+      vim.lsp.enable("rust_analyzer", false)
 
 
       -- Set up keymaps
