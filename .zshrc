@@ -176,8 +176,6 @@ export PATH="/Users/abish/.antigravity/antigravity/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
 
-# Kitty Theme Switcher (Paul Nameless Style)
-alias kt="cd ~/.config/kitty/themes/themes && fzf --preview 'head -n 40 {} && kitty @ set-colors -a -c {}' && cd -"
 
 # Kitty icat alias
 alias icat="kitty +kitten icat"

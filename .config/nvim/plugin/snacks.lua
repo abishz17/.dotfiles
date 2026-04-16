@@ -1,12 +1,11 @@
 vim.pack.add({ 'https://github.com/folke/snacks.nvim' })
 
 require("snacks").setup({
-  bigfile = { enabled = true },    -- Disable heavy features for large files
-  quickfile = { enabled = true },  -- Fast render before plugins load
-  input = { enabled = true },      -- Better vim.ui.input (rename dialogs etc.)
-  scroll = { enabled = true },     -- Smooth scrolling (replaces neoscroll)
-  indent = { enabled = true },     -- Indent guides with scope highlighting
-  -- words = { enabled = true },      -- LSP word references highlighting
+  bigfile = { enabled = true },
+  quickfile = { enabled = true },
+  input = { enabled = true },
+  scroll = { enabled = true },
+  indent = { enabled = true },
   notifier = {
     enabled = true,
     timeout = 3000,
@@ -17,6 +16,33 @@ require("snacks").setup({
     },
   },
   dashboard = {
+    preset = {
+      header = [[
+              ________________________________________________
+             /                                                \
+            |    _________________________________________     |
+            |   |                                         |    |
+            |   |  C:\> _                                 |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |                                         |    |
+            |   |_________________________________________|    |
+            |                                                  |
+             \_________________________________________________/
+                   \___________________________________/
+                ___________________________________________
+             _-'    .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.  --- `-_
+          _-'.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.--.  .-.-.`-_
+       _-'.-.-.-. .---.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-`__`. .-.-.-.`-_
+    _-'.-.-.-.-. .-----.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-----. .-.-.-.-.`-_
+ _-'.-.-.-.-.-. .---.-. .-------------------------. .-.---. .---.-.-.-.`-_
+:-------------------------------------------------------------------------:
+`---._.-------------------------------------------------------------._.---']],
+    },
     sections = {
       { section = "header" },
       { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
@@ -47,7 +73,6 @@ require("snacks").setup({
   image = {},
 })
 
--- Keymaps
 vim.keymap.set("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
 vim.keymap.set("n", "<leader>S", function() Snacks.scratch.select() end, { desc = "Select Scratch Buffer" })
 vim.keymap.set("n", "<leader>n", function() Snacks.notifier.show_history() end, { desc = "Notification History" })
@@ -62,7 +87,6 @@ vim.keymap.set("n", "<leader>un", function() Snacks.notifier.hide() end, { desc 
 vim.keymap.set({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
 vim.keymap.set({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
 
--- Debug helpers and toggles (deferred)
 vim.schedule(function()
   _G.dd = function(...)
     Snacks.debug.inspect(...)
