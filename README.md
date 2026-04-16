@@ -1,7 +1,7 @@
 # Installation
 
 
-![![alt text](./setup.png) ]
+![alt text](./setup.png) 
 
 Clone the repo to home directory , cd into it  and then execute the following command:
 
