@@ -1,0 +1,392 @@
+{
+  "version": 3,
+  "skills": {
+    "caveman": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "caveman/SKILL.md",
+      "skillFolderHash": "825e13085d1515fe67881b2123f3bf9b34c26154",
+      "installedAt": "2026-04-17T04:01:41.906Z",
+      "updatedAt": "2026-04-17T04:01:41.906Z"
+    },
+    "caveman-compress": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "caveman-compress/SKILL.md",
+      "skillFolderHash": "c58e4ecb3f2748626d43c54479e67a4c0fe46f3d",
+      "installedAt": "2026-04-17T04:01:42.470Z",
+      "updatedAt": "2026-04-17T04:01:42.470Z"
+    },
+    "compress": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/compress/SKILL.md",
+      "skillFolderHash": "fc6ecd3c4081d88c72aa55908ec36841f7c7bf9b",
+      "installedAt": "2026-04-17T04:01:43.064Z",
+      "updatedAt": "2026-04-17T04:01:43.064Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-04-17T04:05:14.298Z",
+      "updatedAt": "2026-04-17T04:05:14.298Z"
+    },
+    "1inch": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "1inch/SKILL.md",
+      "skillFolderHash": "fdef5a66768f1cdf3fcd1e2b9fa98ac7370daece",
+      "installedAt": "2026-04-17T11:37:26.497Z",
+      "updatedAt": "2026-04-17T11:37:26.497Z"
+    },
+    "aave": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "aave/SKILL.md",
+      "skillFolderHash": "4375a0867273c7d3bb76894c2199818cb0c5e95f",
+      "installedAt": "2026-04-17T11:37:27.106Z",
+      "updatedAt": "2026-04-17T11:37:27.106Z"
+    },
+    "abstract": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "abstract/SKILL.md",
+      "skillFolderHash": "87d7cef09f259bd54ded2f35c416a484fe2d7a90",
+      "installedAt": "2026-04-17T11:37:27.950Z",
+      "updatedAt": "2026-04-17T11:37:27.950Z"
+    },
+    "backtest": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "backtest/SKILL.md",
+      "skillFolderHash": "07ec7f0d13cddd46d86a456f288e1d5d4d6263be",
+      "installedAt": "2026-04-17T11:37:28.806Z",
+      "updatedAt": "2026-04-17T11:37:28.806Z"
+    },
+    "birdeye": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "birdeye/SKILL.md",
+      "skillFolderHash": "877a9d3dcab18b39f2f8dd7e33a1c1b10d137700",
+      "installedAt": "2026-04-17T11:37:29.607Z",
+      "updatedAt": "2026-04-17T11:37:29.607Z"
+    },
+    "bitget-wallet": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "bitget-wallet/SKILL.md",
+      "skillFolderHash": "b7a1940d7bb4fc97506ccc9c13e035117a412651",
+      "installedAt": "2026-04-17T11:37:30.427Z",
+      "updatedAt": "2026-04-17T11:37:30.427Z"
+    },
+    "browser-preview": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "browser-preview/SKILL.md",
+      "skillFolderHash": "05b09d26524f901ff0526a7686c68c5a5fce748e",
+      "installedAt": "2026-04-17T11:37:31.244Z",
+      "updatedAt": "2026-04-17T11:37:31.244Z"
+    },
+    "chart": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "chart/SKILL.md",
+      "skillFolderHash": "338f1b1f8ea61d6020e39d9109372cc8d7550bb7",
+      "installedAt": "2026-04-17T11:37:32.535Z",
+      "updatedAt": "2026-04-17T11:37:32.535Z"
+    },
+    "charting": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "charting/SKILL.md",
+      "skillFolderHash": "cfeefab8b9779a7fff703f1998d3d7575fe4e3de",
+      "installedAt": "2026-04-17T11:37:33.339Z",
+      "updatedAt": "2026-04-17T11:37:33.339Z"
+    },
+    "coingecko": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "coingecko/SKILL.md",
+      "skillFolderHash": "84406e6bd0fe7d8165e0ca1695a542fb94bb1b6e",
+      "installedAt": "2026-04-17T11:37:33.953Z",
+      "updatedAt": "2026-04-17T11:37:33.953Z"
+    },
+    "coinglass": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "coinglass/SKILL.md",
+      "skillFolderHash": "44d48d0351020fcd38437b893c08cb05047475d1",
+      "installedAt": "2026-04-17T11:37:34.810Z",
+      "updatedAt": "2026-04-17T11:37:34.810Z"
+    },
+    "composio": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "composio/SKILL.md",
+      "skillFolderHash": "1ed436739ba15c38d2ed0bf6c09a88620694e365",
+      "installedAt": "2026-04-17T11:37:35.617Z",
+      "updatedAt": "2026-04-17T11:37:35.617Z"
+    },
+    "creator-insights": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "creator-insights/SKILL.md",
+      "skillFolderHash": "5a5a78a2a170356596419b70166113337df5da88",
+      "installedAt": "2026-04-17T11:37:36.431Z",
+      "updatedAt": "2026-04-17T11:37:36.431Z"
+    },
+    "dashboard": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "dashboard/SKILL.md",
+      "skillFolderHash": "24735e3a5ed93dc18d77eea6648f4726f61d1075",
+      "installedAt": "2026-04-17T11:37:37.699Z",
+      "updatedAt": "2026-04-17T11:37:37.699Z"
+    },
+    "debank": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "debank/SKILL.md",
+      "skillFolderHash": "725bcde3a1a29e44d04f7740708d75f11d979288",
+      "installedAt": "2026-04-17T11:37:38.301Z",
+      "updatedAt": "2026-04-17T11:37:38.301Z"
+    },
+    "defillama": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "defillama/SKILL.md",
+      "skillFolderHash": "1474ab20f3f85b4cd139003a699fd6d393d36673",
+      "installedAt": "2026-04-17T11:37:39.151Z",
+      "updatedAt": "2026-04-17T11:37:39.151Z"
+    },
+    "degenclaw": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "degenclaw/SKILL.md",
+      "skillFolderHash": "cb3dad29ec3d2fe263605cf4565f200aaf451e01",
+      "installedAt": "2026-04-17T11:37:39.984Z",
+      "updatedAt": "2026-04-17T11:37:39.984Z"
+    },
+    "hyperliquid": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "hyperliquid/SKILL.md",
+      "skillFolderHash": "e7d3f8fee0bf5f5c08e868129d5320cc6d25fbeb",
+      "installedAt": "2026-04-17T11:37:40.799Z",
+      "updatedAt": "2026-04-17T11:37:40.799Z"
+    },
+    "lunarcrush": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "lunarcrush/SKILL.md",
+      "skillFolderHash": "bf3033866e8517078b202859723326cd09f9e0d6",
+      "installedAt": "2026-04-17T11:37:41.582Z",
+      "updatedAt": "2026-04-17T11:37:41.582Z"
+    },
+    "mantle": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "mantle/SKILL.md",
+      "skillFolderHash": "5bf8d19de2393f3558aaf3f2aa7b8dfa26ea9c4d",
+      "installedAt": "2026-04-17T11:37:42.491Z",
+      "updatedAt": "2026-04-17T11:37:42.491Z"
+    },
+    "okx": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "okx/SKILL.md",
+      "skillFolderHash": "57af90b3c56caf8482dc4bfce39f929683934cb2",
+      "installedAt": "2026-04-17T11:37:43.768Z",
+      "updatedAt": "2026-04-17T11:37:43.768Z"
+    },
+    "orderly-onboarding": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "orderly-onboarding/SKILL.md",
+      "skillFolderHash": "8a12c8e3f5caef784668719291b589ed1633d427",
+      "installedAt": "2026-04-17T11:37:44.642Z",
+      "updatedAt": "2026-04-17T11:37:44.642Z"
+    },
+    "polymarket": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "polymarket/SKILL.md",
+      "skillFolderHash": "e5268bd99adb0f309d6e84e28c03c105b5c80703",
+      "installedAt": "2026-04-17T11:37:45.242Z",
+      "updatedAt": "2026-04-17T11:37:45.242Z"
+    },
+    "project-builder": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "project-builder/SKILL.md",
+      "skillFolderHash": "2dc30ee907330a31d21fd288d8e7edff7c76af72",
+      "installedAt": "2026-04-17T11:37:46.523Z",
+      "updatedAt": "2026-04-17T11:37:46.523Z"
+    },
+    "sc-vpn": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "sc-vpn/SKILL.md",
+      "skillFolderHash": "33e5c1631335c8e05daae3ed26af888d44d25a7b",
+      "installedAt": "2026-04-17T11:37:47.348Z",
+      "updatedAt": "2026-04-17T11:37:47.348Z"
+    },
+    "skill-creator": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "skill-creator/SKILL.md",
+      "skillFolderHash": "1ea547e5be331e2b62d8da5b5d4566b953124812",
+      "installedAt": "2026-04-17T11:37:48.170Z",
+      "updatedAt": "2026-04-17T11:37:48.170Z"
+    },
+    "skillmarketplace": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "skillmarketplace/SKILL.md",
+      "skillFolderHash": "fe83cc9c80324165c1255c7c80c7d8254f8f3383",
+      "installedAt": "2026-04-17T11:37:49.448Z",
+      "updatedAt": "2026-04-17T11:37:49.448Z"
+    },
+    "slide-creator": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "slide-creator/SKILL.md",
+      "skillFolderHash": "2593a28c4eb65cf379cc99fa4d5bfd454c5da565",
+      "installedAt": "2026-04-17T11:37:50.070Z",
+      "updatedAt": "2026-04-17T11:37:50.070Z"
+    },
+    "taapi": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "taapi/SKILL.md",
+      "skillFolderHash": "0412355b7280406c3d1dc1dd4837213ca5481f13",
+      "installedAt": "2026-04-17T11:37:50.685Z",
+      "updatedAt": "2026-04-17T11:37:50.685Z"
+    },
+    "tg-bot-binding": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "tg-bot-binding/SKILL.md",
+      "skillFolderHash": "47d60a3b1fed226d69e9f9282989c2d0a91fddb1",
+      "installedAt": "2026-04-17T11:37:52.029Z",
+      "updatedAt": "2026-04-17T11:37:52.029Z"
+    },
+    "tokenomist": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "tokenomist/SKILL.md",
+      "skillFolderHash": "09ede7aa55ae5a4c6837c2bf5858a9d681c93d49",
+      "installedAt": "2026-04-17T11:37:52.891Z",
+      "updatedAt": "2026-04-17T11:37:52.891Z"
+    },
+    "trading-strategy": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "trading-strategy/SKILL.md",
+      "skillFolderHash": "68298c41cfc4c78ed7f294353d0188b0f164770a",
+      "installedAt": "2026-04-17T11:37:53.551Z",
+      "updatedAt": "2026-04-17T11:37:53.551Z"
+    },
+    "twelvedata": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "twelvedata/SKILL.md",
+      "skillFolderHash": "bf68f407836acc37dc79dc0d016d31be2527e2bb",
+      "installedAt": "2026-04-17T11:37:54.341Z",
+      "updatedAt": "2026-04-17T11:37:54.341Z"
+    },
+    "twitter": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "twitter/SKILL.md",
+      "skillFolderHash": "dead0f0ddee778792bfbaf426c59f12e1eb0267e",
+      "installedAt": "2026-04-17T11:37:55.615Z",
+      "updatedAt": "2026-04-17T11:37:55.615Z"
+    },
+    "wallet": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "wallet/SKILL.md",
+      "skillFolderHash": "1659e32e66c490e954589aaf4081ddeadb429a60",
+      "installedAt": "2026-04-17T11:37:56.874Z",
+      "updatedAt": "2026-04-17T11:37:56.874Z"
+    },
+    "woofi-swap": {
+      "source": "starchild-ai-agent/official-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/starchild-ai-agent/official-skills.git",
+      "skillPath": "woofi-swap/SKILL.md",
+      "skillFolderHash": "885247ed9e330f35c726c2f0435b6a9bc437436f",
+      "installedAt": "2026-04-17T11:37:58.132Z",
+      "updatedAt": "2026-04-17T11:37:58.132Z"
+    },
+    "pr-review": {
+      "source": "pytorch/pytorch",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/pytorch/pytorch.git",
+      "skillPath": ".claude/skills/pr-review/SKILL.md",
+      "skillFolderHash": "5f34cef502e273caf5d204582345ce1385c7a048",
+      "installedAt": "2026-04-17T11:41:22.946Z",
+      "updatedAt": "2026-04-17T11:41:22.946Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "firebender",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp",
+    "claude-code"
+  ]
+}
