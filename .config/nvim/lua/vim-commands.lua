@@ -44,3 +44,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+  callback = function()
+    if vim.o.autoread then
+      vim.cmd("checktime")
+    end
+  end,
+})
