@@ -20,6 +20,10 @@
       "rev": "84432d9966fafaa08dd9040c98b0011045d8e964",
       "src": "https://github.com/nvim-zh/colorful-winsep.nvim"
     },
+    "conform.nvim": {
+      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
     "data-viewer.nvim": {
       "rev": "40ddf37bb7ab6c04ff9e820812d1539afe691668",
       "src": "https://github.com/vidocqh/data-viewer.nvim"

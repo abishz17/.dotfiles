@@ -4,6 +4,9 @@ vim.pack.add({
 
 vim.g.rustaceanvim = {
   server = {
+    on_attach = function(client, bufnr)
+      client.server_capabilities.semanticTokensProvider = nil
+    end,
     default_settings = {
       ["rust-analyzer"] = {
         cargo = {
