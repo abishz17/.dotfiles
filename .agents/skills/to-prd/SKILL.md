@@ -5,6 +5,9 @@ description: Turn the current conversation context into a PRD , Use when user wa
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
 
+The issue tracker and triage label vocabulary should have been provided to you at [../issue-tracker-local.md]
+
+
 ## Process
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already.
@@ -15,7 +18,7 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-3. Write the PRD using the template below and submit it as a GitHub issue.
+3. Write the PRD using the template below then publish it to the project issue tracker[../issue-tracker-local.md][issue tracker] , use the local issue tracker for where to actually put the issues.(Donot post as a github issue on remote).
 
 <prd-template>
 
