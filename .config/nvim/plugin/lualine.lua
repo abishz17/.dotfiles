@@ -3,4 +3,9 @@ vim.pack.add({
   'https://github.com/nvim-lualine/lualine.nvim',
 })
 
-require('lualine').setup({})
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    require('lualine').setup({})
+  end,
+})

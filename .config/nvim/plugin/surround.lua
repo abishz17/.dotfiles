@@ -1,4 +1,7 @@
--- nvim-surround (Lua rewrite of vim-surround: dot-repeatable, treesitter-aware)
--- Same keybinds: ys (add), cs (change), ds (delete)
-vim.pack.add({ 'https://github.com/kylechui/nvim-surround' })
-require("nvim-surround").setup()
+vim.api.nvim_create_autocmd("InsertEnter", {
+  once = true,
+  callback = function()
+    vim.pack.add('https://github.com/kylechui/nvim-surround')
+    require("nvim-surround").setup({})
+  end,
+})

@@ -16,16 +16,16 @@ vim.opt.updatetime = 250
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_matchit = 1
+
 vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-vim.keymap.set('n', '<leader>ot', '<cmd>OverseerToggle<cr>', { desc = 'Toggle Overseer' })
-vim.keymap.set('n', '<leader>or', '<cmd>OverseerRun<cr>', { desc = 'Run Task' })
-vim.keymap.set('n', '<leader>oa', '<cmd>OverseerQuickAction<cr>', { desc = 'Task Action' })
-
 
 
 vim.keymap.set("n", "<M-j>", ":m .+1<CR>==", { silent = true })

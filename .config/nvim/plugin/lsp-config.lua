@@ -4,41 +4,28 @@ vim.pack.add({
   'https://github.com/neovim/nvim-lspconfig',
 })
 
--- Mason
-require("mason").setup()
+-- Mason: only load when explicitly invoked, not at startup.
+-- Use :Mason or :MasonInstall as you normally would.
+vim.api.nvim_create_user_command("Mason", function(opts)
+  require("mason").setup()
+  require("mason-lspconfig").setup({
+    ensure_installed = {
+      "lua_ls", "gopls", "pyright", "clangd",
+      "ts_ls", "tailwindcss", "bashls",
+    },
+    automatic_enable = false,
+  })
+  -- re-invoke the real :Mason command now that it's loaded
+  vim.cmd("Mason " .. opts.args)
+end, { nargs = "*", desc = "Load Mason and open UI" })
 
--- Mason-lspconfig
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "lua_ls",
-    "gopls",
-    "pyright",
-    "clangd",
-    "ts_ls",
-    "tailwindcss",
-    "bashls",
-  },
-  automatic_enable = false,
-})
-
--- LSP servers
--- blink.cmp capabilities: fetched lazily so blink doesn't load at startup
-local capabilities = (function()
-  local ok, blink = pcall(require, "blink.cmp")
-  if ok then
-    return blink.get_lsp_capabilities({
-      textDocument = { completion = { completionItem = { snippetSupport = false } } },
-    })
-  end
-  return vim.lsp.protocol.make_client_capabilities()
-end)()
-
+-- LSP servers configured directly via native nvim 0.11 APIs.
+-- No mason-lspconfig needed at runtime — servers are already installed.
 local servers = {
   { "lua_ls" },
   {
     "tailwindcss",
     {
-      -- Only attach in projects that have a tailwind config
       root_dir = function(fname)
         local util = require("lspconfig.util")
         return util.root_pattern(
@@ -53,7 +40,6 @@ local servers = {
   {
     "clangd",
     {
-      -- Determine clangd command per-project at attach time, not at startup
       cmd = (function()
         local cwd = vim.fn.getcwd()
         if string.match(cwd, "control%-engine") then
@@ -71,30 +57,40 @@ local servers = {
         gopls = {
           completeUnimported = true,
           usePlaceholders = true,
-          analyses = {
-            unusedparams = true,
-          },
+          analyses = { unusedparams = true },
         },
       },
     },
   },
-
   { "ts_ls" },
   { "ocamllsp" },
 }
 
-for _, server in ipairs(servers) do
-  local name = server[1]
-  local config = server[2] or {}
+-- Wire up capabilities and enable servers after startup so blink.cmp
+-- is guaranteed loaded (it sources before us, but capabilities call
+-- is deferred to avoid pulling blink internals during plugin sourcing)
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  once = true,
+  callback = function()
+    local ok, blink = pcall(require, "blink.cmp")
+    local capabilities = ok
+      and blink.get_lsp_capabilities({
+        textDocument = { completion = { completionItem = { snippetSupport = false } } },
+      })
+      or vim.lsp.protocol.make_client_capabilities()
 
-  config.capabilities = capabilities
+    for _, server in ipairs(servers) do
+      local name = server[1]
+      local config = server[2] or {}
+      config.capabilities = capabilities
+      vim.lsp.config(name, config)
+      vim.lsp.enable(name)
+    end
 
-  vim.lsp.config(name, config)
-  vim.lsp.enable(name)
-end
-
--- Disable rust_analyzer here; rustaceanvim manages it
-vim.lsp.enable("rust_analyzer", false)
+    vim.lsp.enable("rust_analyzer", false)
+  end,
+})
 
 -- LSP keymaps
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

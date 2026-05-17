@@ -1,12 +1,19 @@
--- Trouble.nvim (better diagnostics, references, quickfix)
-vim.pack.add({ 'https://github.com/folke/trouble.nvim' })
+-- Trouble.nvim: lazy load on first keymap use
+local function load_trouble()
+  vim.pack.add({ 'https://github.com/folke/trouble.nvim' })
+  require("trouble").setup({})
+end
 
-require("trouble").setup({})
+local function trouble_cmd(cmd)
+  return function()
+    load_trouble()
+    vim.cmd(cmd)
+  end
+end
 
--- Keymaps
-vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
-vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })
-vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
-vim.keymap.set("n", "<leader>xl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", { desc = "LSP Definitions / References (Trouble)" })
-vim.keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
-vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
+vim.keymap.set("n", "<leader>xx", trouble_cmd("Trouble diagnostics toggle"), { desc = "Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>xX", trouble_cmd("Trouble diagnostics toggle filter.buf=0"), { desc = "Buffer Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>xs", trouble_cmd("Trouble symbols toggle focus=false"), { desc = "Symbols (Trouble)" })
+vim.keymap.set("n", "<leader>xl", trouble_cmd("Trouble lsp toggle focus=false win.position=right"), { desc = "LSP Definitions / References (Trouble)" })
+vim.keymap.set("n", "<leader>xL", trouble_cmd("Trouble loclist toggle"), { desc = "Location List (Trouble)" })
+vim.keymap.set("n", "<leader>xQ", trouble_cmd("Trouble qflist toggle"), { desc = "Quickfix List (Trouble)" })
