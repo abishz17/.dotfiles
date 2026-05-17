@@ -16,7 +16,6 @@ vim.opt.updatetime = 250
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.cmd("set nowrap")
 vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
@@ -44,7 +43,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "FocusGained" }, {
   callback = function()
     if vim.o.autoread then
       vim.cmd("checktime")

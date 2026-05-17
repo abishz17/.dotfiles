@@ -7,7 +7,13 @@ Snacks.setup({
   quickfile = { enabled = true },
   input = { enabled = true },
   scroll = { enabled = true },
-  indent = { enabled = true },
+  indent = {
+    enabled = true,
+    -- disable indent guides in large files to avoid WinScrolled overhead
+    filter = function(buf)
+      return vim.api.nvim_buf_line_count(buf) < 5000
+    end,
+  },
   notifier = {
     enabled = true,
     timeout = 3000,
@@ -24,6 +30,13 @@ Snacks.setup({
         keys = {
           ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
         },
+      },
+    },
+    exclude = { ".git", "node_modules", "target", "build", "dist", ".cache", ".DS_Store" },
+    sources = {
+      files = {
+        hidden = true,
+        ignored = true,
       },
     },
   },
@@ -103,6 +116,17 @@ vim.keymap.set("n", "<leader>gl", function() Snacks.lazygit.log() end, { desc = 
 vim.keymap.set("n", "<leader>un", function() Snacks.notifier.hide() end, { desc = "Dismiss All Notifications" })
 vim.keymap.set({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
 vim.keymap.set({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
+
+-- Picker keymaps (replacing telescope)
+vim.keymap.set("n", "<C-p>", function() Snacks.picker.files() end, { desc = "Find Files" })
+vim.keymap.set("n", "<space>en", function()
+  Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+end, { desc = "Find Nvim Config Files" })
+vim.keymap.set("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Live Grep" })
+vim.keymap.set("n", "<leader>fb", function() Snacks.picker.buffers() end, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fh", function() Snacks.picker.help() end, { desc = "Help Tags" })
+vim.keymap.set("n", "sr", function() Snacks.picker.lsp_references() end, { desc = "LSP References" })
+vim.keymap.set("n", "<leader>fq", function() Snacks.picker.quickfix() end, { desc = "Quickfix List" })
 
 vim.schedule(function()
   _G.dd = function(...)

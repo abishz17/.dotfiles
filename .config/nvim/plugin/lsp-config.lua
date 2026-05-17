@@ -22,33 +22,46 @@ require("mason-lspconfig").setup({
 })
 
 -- LSP servers
-local capabilities = require("blink.cmp").get_lsp_capabilities({
-  textDocument = { completion = { completionItem = { snippetSupport = false } } },
-})
+-- blink.cmp capabilities: fetched lazily so blink doesn't load at startup
+local capabilities = (function()
+  local ok, blink = pcall(require, "blink.cmp")
+  if ok then
+    return blink.get_lsp_capabilities({
+      textDocument = { completion = { completionItem = { snippetSupport = false } } },
+    })
+  end
+  return vim.lsp.protocol.make_client_capabilities()
+end)()
 
 local servers = {
   { "lua_ls" },
-  { "tailwindcss" },
+  {
+    "tailwindcss",
+    {
+      -- Only attach in projects that have a tailwind config
+      root_dir = function(fname)
+        local util = require("lspconfig.util")
+        return util.root_pattern(
+          "tailwind.config.js", "tailwind.config.ts",
+          "tailwind.config.cjs", "tailwind.config.mjs"
+        )(fname)
+      end,
+    },
+  },
   { "pyright" },
   { "bashls" },
   {
     "clangd",
-    (function()
-      local cwd = vim.fn.getcwd()
-      local cmd
-      if string.match(cwd, "control%-engine") then
-        cmd = { "/Users/abish/.local/bin/control-engine-clang-setup.sh" }
-      else
-        cmd = {
-          "clangd",
-          "--background-index",
-        }
-      end
-
-      return {
-        cmd = cmd,
-      }
-    end)(),
+    {
+      -- Determine clangd command per-project at attach time, not at startup
+      cmd = (function()
+        local cwd = vim.fn.getcwd()
+        if string.match(cwd, "control%-engine") then
+          return { "/Users/abish/.local/bin/control-engine-clang-setup.sh" }
+        end
+        return { "clangd", "--background-index" }
+      end)(),
+    },
   },
   {
     "gopls",

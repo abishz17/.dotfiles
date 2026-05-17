@@ -27,47 +27,6 @@ for _, group in pairs({
   vim.fn.sign_define(group, { text = "●", texthl = group })
 end
 
--- Setup
-require("dap").defaults.fallback.switchbuf = "usevisible,usetab,newtab"
-
--- Adapters: C, C++, Rust
-local dap = require("dap")
-dap.adapters.codelldb = {
-  type = "server",
-  port = "${port}",
-  executable = {
-    command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
-    args = { "--port", "${port}" },
-  },
-}
-
-dap.configurations.cpp = {
-  {
-    name = "Launch file (CodeLLDB)",
-    type = "codelldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-    end,
-    cwd = "${workspaceFolder}",
-    stopOnEntry = false,
-    args = {},
-  },
-}
-
-dap.configurations.c = dap.configurations.cpp
-
-require("dap-go").setup({
-  dap_configurations = {
-    {
-      type = "go",
-      name = "Debug-tigg",
-      request = "launch",
-      program = "${workspaceFolder}/cmd/main.go",
-    },
-  },
-})
-
 -- Keymaps (were lazy-loaded via keys in lazy.nvim, now always available)
 vim.keymap.set("n", "<leader>ds", function()
   local widgets = require("dap.ui.widgets")
@@ -95,16 +54,61 @@ vim.keymap.set("n", "<A-r>", function()
   require("dap").repl.toggle(nil, "tab split")
 end, { desc = "Toggle DAP REPL" })
 
--- DAP UI
-local dapui = require("dapui")
-dapui.setup()
+-- Heavy setup deferred: adapters, language integrations, and DAP UI
+-- None of this is needed until a debug session actually starts
+vim.schedule(function()
+  local dap = require("dap")
 
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
-end
+  dap.defaults.fallback.switchbuf = "usevisible,usetab,newtab"
+
+  -- Adapters: C, C++, Rust
+  dap.adapters.codelldb = {
+    type = "server",
+    port = "${port}",
+    executable = {
+      command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+      args = { "--port", "${port}" },
+    },
+  }
+
+  dap.configurations.cpp = {
+    {
+      name = "Launch file (CodeLLDB)",
+      type = "codelldb",
+      request = "launch",
+      program = function()
+        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+      args = {},
+    },
+  }
+
+  dap.configurations.c = dap.configurations.cpp
+
+  require("dap-go").setup({
+    dap_configurations = {
+      {
+        type = "go",
+        name = "Debug-tigg",
+        request = "launch",
+        program = "${workspaceFolder}/cmd/main.go",
+      },
+    },
+  })
+
+  -- DAP UI: setup and wire to dap lifecycle events
+  local dapui = require("dapui")
+  dapui.setup()
+
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+end)

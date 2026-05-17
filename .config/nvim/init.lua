@@ -11,13 +11,6 @@ vim.api.nvim_create_autocmd('PackChanged', { callback = function(ev)
     if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
     vim.cmd('TSUpdate')
   end
-
-  -- telescope-fzf-native: run `make` on install/update
-  if name == 'telescope-fzf-native.nvim' and (kind == 'install' or kind == 'update') then
-    local path = vim.fn.stdpath('data') .. '/site/pack/core/opt/telescope-fzf-native.nvim'
-    vim.fn.system({ 'make', '-C', path })
-  end
-
   -- blink.cmp: run `cargo build --release` on install/update
   if name == 'blink.cmp' and (kind == 'install' or kind == 'update') then
     local path = vim.fn.stdpath('data') .. '/site/pack/core/opt/blink.cmp'

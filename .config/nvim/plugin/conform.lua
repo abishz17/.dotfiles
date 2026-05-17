@@ -9,8 +9,7 @@ require("conform").setup({
     cpp = { "clang_format" },
     rust = { "rustfmt" },  -- direct rustfmt, not via rust-analyzer
   },
-  format_on_save = {
-    timeout_ms = 2000,
+  format_after_save = {
     lsp_fallback = false,  -- don't fall back to LSP, use formatters only
   },
 })
