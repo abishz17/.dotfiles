@@ -45,7 +45,7 @@ Snacks.setup({
       wo = { wrap = true },
     },
   },
-  image = {},
+  image = {enabled = true},
 })
 
 vim.keymap.set("n", "<leader>.", function() Snacks.scratch() end, { desc = "Toggle Scratch Buffer" })
