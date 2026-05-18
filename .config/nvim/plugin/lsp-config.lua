@@ -5,7 +5,6 @@ vim.pack.add({
 })
 
 -- Mason: only load when explicitly invoked, not at startup.
--- Use :Mason or :MasonInstall as you normally would.
 vim.api.nvim_create_user_command("Mason", function(opts)
   require("mason").setup()
   require("mason-lspconfig").setup({
@@ -15,12 +14,16 @@ vim.api.nvim_create_user_command("Mason", function(opts)
     },
     automatic_enable = false,
   })
-  -- re-invoke the real :Mason command now that it's loaded
   vim.cmd("Mason " .. opts.args)
 end, { nargs = "*", desc = "Load Mason and open UI" })
 
 -- LSP servers configured directly via native nvim 0.11 APIs.
--- No mason-lspconfig needed at runtime — servers are already installed.
+-- blink.cmp is already loaded by the time this file sources,
+-- so we can use its augmented capabilities.
+local capabilities = require("blink.cmp").get_lsp_capabilities({
+  textDocument = { completion = { completionItem = { snippetSupport = false } } },
+})
+
 local servers = {
   { "lua_ls" },
   {
@@ -66,31 +69,15 @@ local servers = {
   { "ocamllsp" },
 }
 
--- Wire up capabilities and enable servers after startup so blink.cmp
--- is guaranteed loaded (it sources before us, but capabilities call
--- is deferred to avoid pulling blink internals during plugin sourcing)
-vim.api.nvim_create_autocmd("User", {
-  pattern = "VeryLazy",
-  once = true,
-  callback = function()
-    local ok, blink = pcall(require, "blink.cmp")
-    local capabilities = ok
-      and blink.get_lsp_capabilities({
-        textDocument = { completion = { completionItem = { snippetSupport = false } } },
-      })
-      or vim.lsp.protocol.make_client_capabilities()
+for _, server in ipairs(servers) do
+  local name = server[1]
+  local config = server[2] or {}
+  config.capabilities = capabilities
+  vim.lsp.config(name, config)
+  vim.lsp.enable(name)
+end
 
-    for _, server in ipairs(servers) do
-      local name = server[1]
-      local config = server[2] or {}
-      config.capabilities = capabilities
-      vim.lsp.config(name, config)
-      vim.lsp.enable(name)
-    end
-
-    vim.lsp.enable("rust_analyzer", false)
-  end,
-})
+vim.lsp.enable("rust_analyzer", false)
 
 -- LSP keymaps
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
