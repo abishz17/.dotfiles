@@ -27,6 +27,33 @@
       "skillFolderHash": "a621a3561fc897e97371c709b26a000cc049cdbc",
       "installedAt": "2026-05-17T20:07:39.472Z",
       "updatedAt": "2026-05-17T20:07:39.472Z"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/pbakaus/impeccable.git",
+      "skillPath": "skill/SKILL.md",
+      "skillFolderHash": "6d2dbc37eccb5d89902bda605f1a8bdbad7f36d8",
+      "installedAt": "2026-05-19T17:28:58.938Z",
+      "updatedAt": "2026-05-19T17:28:58.938Z"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/emilkowalski/skill.git",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "skillFolderHash": "0e6f8d7223a0abe73f81e890b3ec76257029a834",
+      "installedAt": "2026-05-23T11:50:28.212Z",
+      "updatedAt": "2026-05-23T11:50:28.212Z"
+    },
+    "design-taste-frontend": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/Leonxlnx/taste-skill.git",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "skillFolderHash": "826d9d12328f2d8b2c00ad5c28e02612d2484faf",
+      "installedAt": "2026-05-24T20:14:02.942Z",
+      "updatedAt": "2026-05-24T20:14:02.942Z"
     }
   },
   "dismissed": {
