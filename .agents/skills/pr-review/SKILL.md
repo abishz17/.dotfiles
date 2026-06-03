@@ -1,5 +1,5 @@
 ---
-name: review
+name: pr-review
 description: Review the changes since a fixed point (commit, branch, tag, or merge-base) across three axes — Spec (does the code do what the ticket asked?), Standards (does it follow this repo's conventions?), and Quality (bugs, edge cases, missed approaches). Runs all three as parallel sub-agents. Use when the user wants to review a PR, a branch, WIP changes, or asks to "review since X". The spec can be pasted directly (Jira ticket, Linear issue, PRD text) — no MCP needed. Replaces the separate pr-review skill.
 ---
 

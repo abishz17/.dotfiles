@@ -120,6 +120,7 @@ alias cnvim="cd $HOME/.config/nvim && nvim ."
 # bindkey -s ^f  "$HOME/.dotfiles/tab-navigator.sh\n"
 
 alias python="python3"
+alias orbit="cd $HOME/personal/orbit/ && make dev"
 
 export PATH=$PATH:$(go env GOPATH)/bin
 

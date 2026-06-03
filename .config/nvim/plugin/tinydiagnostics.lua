@@ -39,10 +39,13 @@ vim.schedule(function()
       },
       show_all_diags_on_cursorline = false,
       show_diags_only_under_cursor = false,
+      -- show_related expands compiler notes (e.g. "consider prefixing with _")
+      -- into separate diagnostic bullets, making one warning look like 3.
+      -- Disabled to avoid the triple-diagnostic visual clutter.
       show_related = {
-        enabled = true,
-        max_count = 3,
-      },
+          enabled = false,
+          max_count = 1,
+        },
       enable_on_insert = false,
       enable_on_select = false,
       overflow = {

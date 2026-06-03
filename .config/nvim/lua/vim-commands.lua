@@ -43,6 +43,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 
+
 vim.api.nvim_create_autocmd({ "FocusGained" }, {
   callback = function()
     if vim.o.autoread then

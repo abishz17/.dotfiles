@@ -1,19 +1,10 @@
--- Trouble.nvim: lazy load on first keymap use
-local function load_trouble()
-  vim.pack.add({ 'https://github.com/folke/trouble.nvim' })
-  require("trouble").setup({})
-end
+-- Eager install (vim.pack.add is idempotent after first install)
+vim.pack.add({ 'https://github.com/folke/trouble.nvim' })
+require("trouble").setup({})
 
-local function trouble_cmd(cmd)
-  return function()
-    load_trouble()
-    vim.cmd(cmd)
-  end
-end
-
-vim.keymap.set("n", "<leader>xx", trouble_cmd("Trouble diagnostics toggle"), { desc = "Diagnostics (Trouble)" })
-vim.keymap.set("n", "<leader>xX", trouble_cmd("Trouble diagnostics toggle filter.buf=0"), { desc = "Buffer Diagnostics (Trouble)" })
-vim.keymap.set("n", "<leader>xs", trouble_cmd("Trouble symbols toggle focus=false"), { desc = "Symbols (Trouble)" })
-vim.keymap.set("n", "<leader>xl", trouble_cmd("Trouble lsp toggle focus=false win.position=right"), { desc = "LSP Definitions / References (Trouble)" })
-vim.keymap.set("n", "<leader>xL", trouble_cmd("Trouble loclist toggle"), { desc = "Location List (Trouble)" })
-vim.keymap.set("n", "<leader>xQ", trouble_cmd("Trouble qflist toggle"), { desc = "Quickfix List (Trouble)" })
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle("diagnostics") end, { desc = "Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>xX", function() require("trouble").toggle({ mode = "diagnostics", filter = { buf = 0 } }) end, { desc = "Buffer Diagnostics (Trouble)" })
+vim.keymap.set("n", "<leader>xs", function() require("trouble").toggle({ mode = "symbols", focus = false }) end, { desc = "Symbols (Trouble)" })
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle({ mode = "lsp", focus = false, win = { position = "right" } }) end, { desc = "LSP Definitions / References (Trouble)" })
+vim.keymap.set("n", "<leader>xL", function() require("trouble").toggle("loclist") end, { desc = "Location List (Trouble)" })
+vim.keymap.set("n", "<leader>xQ", function() require("trouble").toggle("qflist") end, { desc = "Quickfix List (Trouble)" })
