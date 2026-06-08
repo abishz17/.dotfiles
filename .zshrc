@@ -189,3 +189,6 @@ sessionizer() {
 }
 bindkey -s '^f' 'sessionizer\n'   # zsh
 # For bash: bind -x '"\C-f": sessionizer'
+
+# Added by Antigravity IDE
+export PATH="/Users/abish/.antigravity-ide/antigravity-ide/bin:$PATH"
