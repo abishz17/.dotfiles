@@ -1,10 +1,7 @@
-# vim:fileencoding=utf-8
-
-# Theme first — everything below can override it
-include themes/rosepine-moon.conf
+# vim:fileencoding=utf-8:foldmethod=marker
 
 # --- Fonts ---
-font_family      JetBrains Mono
+font_family      Jetbrains Mono
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -13,19 +10,14 @@ adjust_line_height 110%
 
 # --- Window Layout ---
 window_padding_width 15
-# Translucent default so it survives config reloads; fine-tune with ⌘⌥- / ⌘⌥=
-background_opacity 1 
-# Blur only takes effect while translucent (see Background Opacity keys below)
+background_opacity 1
 background_blur 20
 dynamic_background_opacity yes
 hide_window_decorations titlebar-only
 macos_option_as_alt yes
 macos_titlebar_color background
 macos_traditional_fullscreen yes
-# 0.47+: let traditional fullscreen fill the notch area (MacBooks)
-macos_fullscreen_ignore_safe_area_insets yes
 macos_show_window_title_in menubar
-macos_quit_when_last_window_closed yes
 confirm_os_window_close 0
 remember_window_size  yes
 initial_window_width  1000
@@ -34,19 +26,6 @@ initial_window_height 650
 # --- Cursor ---
 cursor_shape beam
 cursor_blink_interval 0.5
-cursor_trail 3
-
-# --- Scrolling & Copy ---
-scrollback_lines 10000
-touch_scroll_multiplier 2.0
-copy_on_select yes
-strip_trailing_spaces smart
-# Hide the mouse the instant you start typing (keyboard-first)
-mouse_hide_wait -1
-
-# --- Notifications ---
-# Desktop notification when a long command finishes (needs shell_integration)
-notify_on_cmd_finish unfocused
 
 # --- Tab Bar ---
 tab_bar_edge bottom
@@ -57,18 +36,17 @@ tab_bar_min_tabs 1
 active_tab_font_style bold
 inactive_tab_font_style normal
 
+# --- Mouse ---
+copy_on_select yes
+focus_on_mouse_move no
+
 # --- Performance ---
 repaint_delay 10
 input_delay 3
 sync_to_monitor yes
 
 # --- Layouts ---
-enabled_layouts splits,stack,tall
-
-# --- Colors (256-palette) ---
-# 0.47+: derive the 240 unset 256-color entries from our 16 Rosé Pine colors
-# instead of the legacy fixed palette (keeps TUI apps theme-consistent)
-palette_generate legacy
+enabled_layouts splits,stack,tall,fat
 
 # --- Keyboard Shortcuts ---
 
@@ -116,6 +94,7 @@ map cmd+shift+j resize_window shorter
 
 # Window Management
 map cmd+ctrl+f toggle_fullscreen
+map cmd+f11 toggle_fullscreen
 
 # Reload Config
 map cmd+ctrl+, load_config_file
@@ -155,25 +134,11 @@ map cmd+opt+0 set_background_opacity default
 # Clear line
 map cmd+backspace send_text all \x15
 
-# --- 0.45+: choose-files ---
-# fzf-style file picker with previews; after choosing, press ctrl+shift+p>c
-# (built-in default binding) to insert the path into the shell prompt
-map cmd+ctrl+o launch --type=overlay kitten choose-files
+# ~/.config/kitty/kitty.conf
 
-# --- 0.43+: sessions ---
-# Save the current tabs/windows as a .kitty-session file (restore with
-# `kitty --session <file>`, or drag-and-drop the file into kitty)
-map cmd+ctrl+s save_as_session
+include themes/rosepine-moon.conf
+
+
 
 # --- Symbols ---
-# Nerd Font glyph fallback for icons used in the tab bar & prompts
 symbol_map U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d4,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b1,U+e700-U+e7c5,U+f000-U+f2e0,U+f300-U+f372,U+f400-U+f532,U+f0001-U+f1af0 Hack Nerd Font Mono
-
-# --- Power-user kittens (internet favorites) ---
-# Fuzzy tab switcher across all tabs
-map cmd+shift+t select_tab
-# Command palette, mac-style (the built-in is ctrl+shift+f3)
-map cmd+shift+o command_palette
-# File transfer over the TTY — works inside container/SSH sessions
-map cmd+shift+u kitten transfer --direction=upload
-map cmd+ctrl+g kitten transfer --direction=download

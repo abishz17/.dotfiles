@@ -16,5 +16,11 @@ vim.pack.add({
 		name = "rose-pine",
 	},
 })
-require("rose-pine").setup()
+-- Use the same variant as kitty (Rosé Pine Moon) so the palette matches
+-- exactly, and let the terminal background show through so there's no seam.
+require("rose-pine").setup({
+	variant = "moon",
+	disable_background = true,
+	disable_float_background = true,
+})
 vim.cmd("colorscheme rose-pine")

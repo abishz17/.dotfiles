@@ -15,7 +15,8 @@ if [ -z "$TARGET" ]; then
   exit 1
 fi
 
-KITTY_SOCKET="unix:/tmp/mykitty-${KITTY_PID}"
+# Prefer kitty's exported socket address; fall back to the legacy fixed path
+KITTY_SOCKET="${KITTY_LISTEN_ON:-unix:/tmp/mykitty-${KITTY_PID}}"
 TAB_TITLE="$(basename "$TARGET")"
 
 case "$MODE" in
