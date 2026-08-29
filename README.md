@@ -40,9 +40,13 @@ a machine that actually works.
 
 Installed by their own scripts, listed here so a rebuild does not quietly miss them:
 
-- `bun`, `opam`, `uv` (and the Python it manages), the Go toolchain
-- AI CLIs on `PATH` in `.zshrc`: codex, amp, grok, kimi-code, antigravity-ide, codegraph
+- `bun`, `opam`
+- AI CLIs on `PATH` in `.zshrc` that are not brew/npm packages: amp, grok,
+  kimi-code, antigravity-ide
 - macOS system settings (`defaults write`), app licences, SSH and GPG keys
+
+Everything else is in the `Brewfile`, including the `go`, `npm`, `cargo` and `uv`
+tool entries that `brew bundle dump` captures alongside the formulae.
 
 Neovim needs nothing - `.config/nvim/nvim-pack-lock.json` pins every plugin to a
 commit and restores them on first launch.

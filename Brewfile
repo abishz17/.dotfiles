@@ -94,6 +94,8 @@ brew "mole"
 # Message broker implementing the MQTT protocol
 brew "mosquitto"
 # Feature-rich command-line audio/video downloader
+brew "rust" # provides cargo, which the cargo entries below need
+brew "uv" # needed by the uv entry below
 brew "yt-dlp"
 # Media player based on MPlayer and mplayer2
 brew "mpv"
