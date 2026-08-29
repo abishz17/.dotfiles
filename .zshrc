@@ -5,6 +5,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Homebrew sits at a different prefix per platform: /opt/homebrew on Apple
+# Silicon, /usr/local on Intel, /home/linuxbrew/.linuxbrew on Linux. Resolve it
+# once so nothing below has to hardcode a path.
+for __brew in /opt/homebrew /usr/local /home/linuxbrew/.linuxbrew; do
+  if [ -x "$__brew/bin/brew" ]; then
+    export BREW_PREFIX="$__brew"
+    eval "$("$__brew/bin/brew" shellenv)"
+    break
+  fi
+done
+unset __brew
+: "${BREW_PREFIX:=/opt/homebrew}"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -79,7 +92,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
 
-source $ZSH/oh-my-zsh.sh
+[ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
 
@@ -109,9 +122,9 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-export PATH="/opt/homebrew/opt/mongodb-community@5.0/bin:$PATH"
+export PATH="$BREW_PREFIX/opt/mongodb-community@5.0/bin:$PATH"
 
-export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="$BREW_PREFIX/opt/libpq/bin:$PATH"
 
 alias cnvim="cd $HOME/.config/nvim && nvim ."
 
@@ -122,15 +135,14 @@ alias cnvim="cd $HOME/.config/nvim && nvim ."
 alias python="python3"
 alias orbit="cd $HOME/personal/orbit/ && make dev"
 
-export PATH=$PATH:$(go env GOPATH)/bin
+command -v go >/dev/null && export PATH="$PATH:$(go env GOPATH)/bin"
 
 alias vim="nvim"
 alias lg="lazygit"
 alias cat="lolcat"
 
-export PATH=$PATH:/Users/abish/Library/Python/3.14/bin
+export PATH=$PATH:$HOME/Library/Python/3.14/bin
 
-. "/Users/abish/.deno/env"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
@@ -141,20 +153,17 @@ alias db="PGPASSWORD=postgres psql -h localhost -U postgres -d pos"
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r '/Users/abish/.opam/opam-init/init.zsh' ]] || source '/Users/abish/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
 # END opam configuration
 #
 
 
 
 
-# Added by Windsurf
-export PATH="/Users/abish/.codeium/windsurf/bin:$PATH"
 
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 # bun completions
-[ -s "/Users/abish/.bun/_bun" ] && source "/Users/abish/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -163,17 +172,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$BREW_PREFIX/bin:$PATH"
 
 
 
 
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="$BREW_PREFIX/opt/llvm/bin:$PATH"
 
-# Added by Antigravity
-export PATH="/Users/abish/.antigravity/antigravity/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -200,7 +206,7 @@ bindkey -s '^f' 'sessionizer\n'   # zsh
 # For bash: bind -x '"\C-f": sessionizer'
 
 # Added by Antigravity IDE
-export PATH="/Users/abish/.antigravity-ide/antigravity-ide/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 # >>> BridgeSpace shell integration >>>
 # BridgeSpace emits OSC 133 semantic prompt markers so its AI inline
@@ -219,7 +225,7 @@ fi
 # <<< BridgeSpace shell integration <<<
 
 # kimi-code
-export PATH="/Users/abish/.kimi-code/bin:$PATH"
+export PATH="$HOME/.kimi-code/bin:$PATH"
 
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"

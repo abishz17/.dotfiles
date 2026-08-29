@@ -1,0 +1,18 @@
+# Files that belong to the repo, not to $HOME. Without this, `stow .` symlinks
+# the Brewfile, the bootstrap script and the README straight into your home
+# directory.
+#
+# Two things to know: these are Perl regexes ANCHORED AT BOTH ENDS, so a bare
+# `\.bak` matches nothing - you need `.*\.bak.*`. And the presence of this file
+# REPLACES stow's built-in default ignore list, so .git has to be repeated here.
+^/README\.md$
+^/setup\.png$
+^/Brewfile$
+^/bootstrap\.sh$
+^/\.gitignore$
+^/\.stow-local-ignore$
+^/\.git$
+.*\.bak.*
+.*__pycache__.*
+.*\.pyc
+\.DS_Store
