@@ -59,17 +59,6 @@ clone_plugin() {
 clone_plugin zsh-autosuggestions     https://github.com/zsh-users/zsh-autosuggestions
 clone_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting
 
-# --------------------------------------------------------------------- tmux --
-# .tmux.conf ends with `run '~/.tmux/plugins/tpm/tpm'`. Without tpm that line
-# fails quietly and none of the six declared plugins exist.
-step "tmux plugin manager"
-TPM="$HOME/.tmux/plugins/tpm"
-if [ ! -d "$TPM" ]; then
-    git clone --depth=1 https://github.com/tmux-plugins/tpm "$TPM"
-else
-    skip "$TPM"
-fi
-
 # --------------------------------------------------------------------- stow --
 # Symlinks everything in this repo into $HOME, the same way the README always
 # described. Idempotent: re-running on a machine that is already stowed is a
@@ -95,11 +84,6 @@ and re-run, or adopt it into the repo and inspect the difference:
 MSG
     exit 1
 fi
-
-# ------------------------------------------------------------ tmux plugins ---
-step "tmux plugins"
-"$TPM/bin/install_plugins" >/dev/null 2>&1 || \
-    echo "    run prefix + I inside tmux if plugins are missing"
 
 # --------------------------------------------------------------------- done --
 cat <<'MSG'

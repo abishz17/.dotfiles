@@ -1,6 +1,6 @@
 # .dotfiles
 
-zsh, tmux, neovim, kitty and television configs, plus the package list and the
+zsh, neovim, kitty and television configs, plus the package list and the
 script that turns a bare machine into a working one.
 
 ![setup](./setup.png)
@@ -23,9 +23,7 @@ to pick up new `Brewfile` entries.
 | `brew bundle` | Restores the packages in `Brewfile` - without them every symlink below points at a program that is not installed |
 | oh-my-zsh | `.zshrc` sources `$ZSH/oh-my-zsh.sh`. Missing it means the shell config stops loading half way down |
 | zsh-autosuggestions, zsh-syntax-highlighting | Named in `plugins=(...)` but not shipped with oh-my-zsh |
-| tpm | `.tmux.conf` ends with `run '~/.tmux/plugins/tpm/tpm'`. Without it the six declared plugins fail silently |
 | `stow .` | Symlinks the configs into `$HOME` |
-| tpm install | Fetches the tmux plugins |
 
 ## Updating the package list
 
