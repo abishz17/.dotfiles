@@ -295,33 +295,99 @@ def glog [n: int = 50] {
     | update date { into datetime }
 }
 
-# Delete local branches already merged into any base branch that exists on origin (release/* kept).
-# Squash-merged PRs aren't detected by git as merged, so those branches are left alone.
+# Delete local branches that are finished (base branches, current branch and release/* are kept):
+#   merged — merged into dev/develop/staging/main/master on origin
+#   gone   — was pushed, and its remote branch has since been deleted (squash-merged PRs)
 def gclean [] {
     const base_names = [dev develop staging main master]
     git fetch --prune --quiet
+    let keep = $base_names | append (git branch --show-current)
+
     let bases = $base_names
         | each {|b| $"origin/($b)" }
         | where {|ref| (do { ^git rev-parse --verify --quiet $ref } | complete).exit_code == 0 }
-    if ($bases | is-empty) {
-        print "no dev/develop/staging/main/master branch on origin"
-        return
-    }
-    let keep = $base_names | append (git branch --show-current)
     let merged = $bases
         | each {|b| git branch --format '%(refname:short)' --merged $b | lines }
         | flatten
         | uniq
-        | where {|br| $br not-in $keep and not ($br starts-with "release/") }
-    if ($merged | is-empty) {
-        print $"nothing merged into ($bases | str join ', ')"
+        | each {|br| {branch: $br, reason: merged} }
+    let gone = git for-each-ref refs/heads --format '%(refname:short)|%(upstream:track)'
+        | lines
+        | split column '|' branch track
+        | where track == '[gone]'
+        | each {|r| {branch: $r.branch, reason: gone} }
+
+    let candidates = $merged
+        | append $gone
+        | group-by branch
+        | items {|branch, rows| {branch: $branch, reason: ($rows.reason | uniq | str join '+')} }
+        | where {|r| $r.branch not-in $keep and not ($r.branch starts-with "release/") }
+        | join -l (gbr | select branch date) branch
+        | sort-by date
+
+    if ($candidates | is-empty) {
+        print "nothing to clean"
         return
     }
-    print $"merged into ($bases | str join ', '):"
-    for br in $merged { print $"  ($br)" }
-    if (input $"delete ($merged | length) local branches? [y/N] ") == "y" {
-        for br in $merged { git branch -D $br }
+    print ($candidates | select branch reason date)
+    if (input $"delete ($candidates | length) local branches? [y/N] ") == "y" {
+        for br in $candidates.branch { git branch -D $br }
     }
+}
+
+# Open PRs in this repo as a table:  gh-prs | where base == dev
+def gh-prs [--limit(-l): int = 50] {
+    gh pr list --limit $limit --json number,title,author,headRefName,baseRefName,isDraft,reviewDecision,updatedAt
+    | from json
+    | each {|pr| {
+        number: $pr.number
+        title: $pr.title
+        author: $pr.author.login
+        head: $pr.headRefName
+        base: $pr.baseRefName
+        draft: $pr.isDraft
+        review: $pr.reviewDecision
+        updated: ($pr.updatedAt | into datetime)
+    } }
+}
+
+# Pick processes with fzf (tab for multiple) and kill them:  killp node   ·   killp --force
+def killp [name?: string, --force(-f)] {
+    let procs = ps | where {|p| $name == null or ($p.name =~ $"\(?i\)($name)") }
+    if ($procs | is-empty) {
+        print $"no process matching '($name)'"
+        return
+    }
+    let picked = $procs
+        | sort-by cpu --reverse
+        | each {|p| $"($p.pid)\t($p.name)\t($p.cpu | math round --precision 1)%\t($p.mem)" }
+        | str join "\n"
+        | fzf --multi --delimiter "\t" --header "pid  name  cpu  mem   (tab: select multiple)"
+        | complete
+        | get stdout
+        | lines
+    for line in $picked {
+        let pid = $line | split row "\t" | first | into int
+        if $force { kill --force $pid } else { kill $pid }
+        print $"killed ($line | str replace --all "\t" '  ')"
+    }
+}
+
+# Top processes by memory / CPU:  topmem   ·   topcpu 20
+def topmem [n: int = 10] { ps | sort-by mem --reverse | first $n | select pid name mem cpu }
+def topcpu [n: int = 10] { ps | sort-by cpu --reverse | first $n | select pid name cpu mem }
+
+# Search environment variables by name, case-insensitive:  envf go
+def envf [pattern: string] {
+    $env | transpose key value | where key =~ $"\(?i\)($pattern)"
+}
+
+# Copy piped output to the clipboard — tables as they look on screen:  glog | clip   ·   glog | to md | clip
+def clip [] {
+    let data = $in
+    let text = if ($data | describe) == "string" { $data } else { $data | table --expand | ansi strip }
+    $text | ^pbcopy
+    print $"copied ($text | lines | length) lines"
 }
 
 # ═══════════════════════════ PROMPT ═════════════════════════════
