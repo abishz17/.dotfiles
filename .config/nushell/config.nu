@@ -12,10 +12,47 @@
 # ═══════════════════════════════════════════════════════════════
 
 # ───────────────────────────────── PATH ─────────────────────────
-$env.PATH = ($env.PATH | prepend "/opt/homebrew/bin")
-$env.PATH = ($env.PATH | prepend $"($env.HOME)/.npm-global/bin")
-$env.PATH = ($env.PATH | prepend $"($env.HOME)/.local/bin")
-$env.PATH = ($env.PATH | prepend $"($env.HOME)/.bun/bin")
+# kitty launches nu directly, so nothing from .zshenv/.zprofile/.zshrc applies here.
+# Keep this in sync with the PATH lines in those files. Dirs that don't exist are dropped.
+let brew = if ("/opt/homebrew" | path exists) { "/opt/homebrew" } else { "/usr/local" }
+let home = $nu.home-dir
+
+$env.HOMEBREW_PREFIX = $brew
+$env.HOMEBREW_CELLAR = $"($brew)/Cellar"
+$env.HOMEBREW_REPOSITORY = $brew
+$env.BUN_INSTALL = $"($home)/.bun"
+$env.LANG = ($env.LANG? | default "en_US.UTF-8")
+
+$env.PATH = ($env.PATH
+    | split row (char esep)
+    | prepend [
+        $"($home)/.grok/bin"
+        $"($home)/.kimi-code/bin"
+        $"($home)/.antigravity-ide/antigravity-ide/bin"
+        $"($home)/.local/bin"
+        $"($brew)/opt/llvm/bin"
+        $"($brew)/bin"
+        $"($brew)/sbin"
+        $"($home)/.bun/bin"
+        $"($home)/.npm-global/bin"
+        $"($brew)/opt/libpq/bin"
+        $"($brew)/opt/mongodb-community@5.0/bin"
+        $"($home)/.orbstack/bin"
+        $"($home)/.cargo/bin"
+    ]
+    | append [
+        $"($home)/go/bin"
+        $"($home)/Library/Python/3.14/bin"
+        $"($home)/Library/Application Support/JetBrains/Toolbox/scripts"
+    ]
+    | where {|p| $p | path exists }
+    | uniq
+)
+
+# Secrets and machine-specific env (e.g. API keys) — untracked, loaded only if present.
+const local_env = ($nu.home-dir | path join ".env.local.nu")
+const local_env_file = if ($local_env | path exists) { $local_env } else { null }
+source $local_env_file
 
 $env.EDITOR = "nvim"
 $env.VISUAL = "nvim"
