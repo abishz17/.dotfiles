@@ -5,5 +5,8 @@
 __pycache__/
 *.pyc
 
+# Shell history (private, and rewritten on every command)
+.config/nushell/history.*
+
 # macOS
 .DS_Store

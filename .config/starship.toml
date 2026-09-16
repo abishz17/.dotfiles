@@ -1,0 +1,297 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ───────────────────────────────────────────────────────────────
+#  Rail prompt — Catppuccin Mocha
+#
+#  ╭─ 󰀵  ~/dev/ros-server   feat/x ●2 ✚1 ──── 󰎙 22.14  10:54
+#  ╰─❯
+# ───────────────────────────────────────────────────────────────
+
+palette = 'catppuccin_mocha'
+add_newline = true
+
+format = """
+[╭─](fg:surface2)\
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$fill\
+$nodejs\
+$bun\
+$deno\
+$python\
+$golang\
+$rust\
+$java\
+$kotlin\
+$swift\
+$ruby\
+$php\
+$lua\
+$zig\
+$c\
+$aws\
+$nix_shell\
+$jobs\
+$status\
+$cmd_duration\
+$time\
+$line_break\
+[╰─](fg:surface2)\
+$character"""
+
+# ── the dim line that stretches to the right edge ──────────────
+[fill]
+symbol = "─"
+style = "fg:surface0"
+
+# ── left rail ──────────────────────────────────────────────────
+[os]
+disabled = false
+style = "fg:mauve"
+format = '[$symbol ]($style)'
+
+[os.symbols]
+Macos = "󰀵"
+Linux = "󰌽"
+Ubuntu = "󰕈"
+Arch = "󰣇"
+Debian = "󰣚"
+Fedora = "󰣛"
+Alpine = ""
+Windows = "󰍲"
+
+[username]
+show_always = false
+style_user = "fg:flamingo"
+style_root = "bold fg:red"
+format = '[$user](fg:flamingo)[@](fg:overlay0)'
+
+[hostname]
+ssh_only = true
+style = "fg:flamingo"
+format = '[$hostname]($style) '
+
+[directory]
+style = "bold fg:blue"
+format = '[$path]($style)[$read_only]($read_only_style) '
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = false
+home_symbol = "~"
+read_only = " 󰌾"
+read_only_style = "fg:red"
+repo_root_style = "bold fg:lavender"
+before_repo_root_style = "fg:overlay1"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = "󰇚 "
+"Music" = "󰝚 "
+"Pictures" = "󰋩 "
+"Developer" = "󰲋 "
+"Desktop" = "󰇄 "
+
+[git_branch]
+symbol = ""
+style = "fg:mauve"
+format = '[$symbol $branch]($style)[(:$remote_branch)](fg:overlay0) '
+truncation_length = 28
+truncation_symbol = "…"
+
+[git_status]
+format = '($all_status$ahead_behind)'
+conflicted = '[󰞇 ${count}](fg:red) '
+ahead = '[⇡${count}](fg:teal) '
+behind = '[⇣${count}](fg:teal) '
+diverged = '[⇕${ahead_count}⇣${behind_count}](fg:teal) '
+up_to_date = ''
+untracked = '[?${count}](fg:overlay1) '
+stashed = ''
+modified = '[✗${count}](fg:yellow) '
+staged = '[✚${count}](fg:green) '
+renamed = '[»${count}](fg:peach) '
+deleted = '[−${count}](fg:red) '
+ignore_submodules = true
+# Shell out to the real `git` binary instead of starship's bundled git.
+# It honours core.fsmonitor / core.untrackedCache, which takes the untracked
+# scan in large worktrees from ~450ms (timing out) to ~47ms.
+use_git_executable = true
+
+[git_state]
+style = "fg:peach"
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+rebase = "󰝤 REBASE"
+merge = "󰃸 MERGE"
+revert = "󰕌 REVERT"
+cherry_pick = "󰳞 PICK"
+bisect = "󰩈 BISECT"
+am = "󰇮 AM"
+
+# ── right rail: toolchains ─────────────────────────────────────
+[nodejs]
+symbol = "󰎙"
+style = "fg:green"
+format = '[ $symbol $version]($style)'
+detect_files = ["package.json", ".nvmrc", ".node-version"]
+
+[bun]
+symbol = "󰛦"
+style = "fg:rosewater"
+format = '[ $symbol $version]($style)'
+
+[deno]
+symbol = "󰛦"
+style = "fg:sky"
+format = '[ $symbol $version]($style)'
+
+[python]
+symbol = "󰌠"
+style = "fg:yellow"
+format = '[ $symbol $version(  $virtualenv)]($style)'
+
+[golang]
+symbol = "󰟓"
+style = "fg:sky"
+format = '[ $symbol $version]($style)'
+
+[rust]
+symbol = "󱘗"
+style = "fg:peach"
+format = '[ $symbol $version]($style)'
+
+[java]
+symbol = "󰬷"
+style = "fg:maroon"
+format = '[ $symbol $version]($style)'
+
+[kotlin]
+symbol = "󱈙"
+style = "fg:mauve"
+format = '[ $symbol $version]($style)'
+
+[swift]
+symbol = "󰛥"
+style = "fg:peach"
+format = '[ $symbol $version]($style)'
+
+[ruby]
+symbol = "󰴭"
+style = "fg:red"
+format = '[ $symbol $version]($style)'
+
+[php]
+symbol = "󰌟"
+style = "fg:lavender"
+format = '[ $symbol $version]($style)'
+
+[lua]
+symbol = "󰢱"
+style = "fg:blue"
+format = '[ $symbol $version]($style)'
+
+[zig]
+symbol = ""
+style = "fg:yellow"
+format = '[ $symbol $version]($style)'
+
+[c]
+symbol = ""
+style = "fg:sapphire"
+format = '[ $symbol $version]($style)'
+
+# ── right rail: context ────────────────────────────────────────
+[aws]
+symbol = "󰸏"
+style = "fg:peach"
+format = '[ $symbol $profile(\($region\))]($style)'
+
+[nix_shell]
+symbol = "󱄅"
+style = "fg:sky"
+format = '[ $symbol $state]($style)'
+
+# ── right rail: session ────────────────────────────────────────
+[jobs]
+symbol = "󰜎"
+style = "fg:teal"
+number_threshold = 1
+format = '[ $symbol $number]($style)'
+
+[status]
+disabled = false
+symbol = "󰅗"
+success_symbol = ""
+not_executable_symbol = "󰒃"
+not_found_symbol = "󰍉"
+sigint_symbol = "󰜺"
+signal_symbol = "󱐋"
+map_symbol = true
+style = "fg:red"
+format = '[ $symbol $status]($style)'
+
+[cmd_duration]
+min_time = 500
+style = "fg:yellow"
+format = '[ 󱎫 $duration]($style)'
+show_milliseconds = false
+
+[time]
+disabled = false
+time_format = "%R"
+style = "fg:overlay1"
+format = '[ 󰅐](fg:surface2)[ $time]($style)'
+
+# ── the prompt character ───────────────────────────────────────
+[character]
+success_symbol = '[❯](bold fg:green)'
+error_symbol = '[❯](bold fg:red)'
+vimcmd_symbol = '[❮](bold fg:mauve)'
+vimcmd_replace_one_symbol = '[❮](bold fg:lavender)'
+vimcmd_replace_symbol = '[❮](bold fg:lavender)'
+vimcmd_visual_symbol = '[❮](bold fg:yellow)'
+
+# ── noise suppression ──────────────────────────────────────────
+[docker_context]
+disabled = true
+
+[package]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = false
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

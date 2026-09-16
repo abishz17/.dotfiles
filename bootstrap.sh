@@ -85,6 +85,16 @@ MSG
     exit 1
 fi
 
+# Nushell on macOS reads ~/Library/Application Support/nushell, not ~/.config/nushell.
+nu_lib="$HOME/Library/Application Support/nushell"
+if [ "$(uname)" = "Darwin" ]; then
+    if [ ! -e "$nu_lib" ] && [ ! -L "$nu_lib" ]; then
+        ln -s "$HOME/.config/nushell" "$nu_lib"
+    elif [ ! -L "$nu_lib" ]; then
+        echo "    $nu_lib is a real directory - move it aside and re-run to link it" >&2
+    fi
+fi
+
 # --------------------------------------------------------------------- done --
 cat <<'MSG'
 

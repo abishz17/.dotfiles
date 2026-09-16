@@ -13,6 +13,8 @@ brew "asciinema"
 brew "asio"
 # To build and run Airflow DAGs locally and interact with the Astronomer API
 brew "astro"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin"
 # Automatic configure script builder
 brew "autoconf"
 # Collection of over 500 reusable autoconf macros
@@ -21,12 +23,16 @@ brew "autoconf-archive"
 brew "automake"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
 # Collection of portable C++ source libraries
 brew "boost"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Data interchange format and capability-based RPC system
 brew "capnp"
+# Multi-shell multi-command argument completer
+brew "carapace"
 # Object-file caching compiler wrapper
 brew "ccache"
 # Versatile and fast Unicode/ASCII/ANSI graphics renderer
@@ -47,10 +53,14 @@ brew "cppcheck"
 brew "delve"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
+# Modern, maintained replacement for ls
+brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# Command-line tools for fly.io services
+brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool
@@ -94,8 +104,6 @@ brew "mole"
 # Message broker implementing the MQTT protocol
 brew "mosquitto"
 # Feature-rich command-line audio/video downloader
-brew "rust" # provides cargo, which the cargo entries below need
-brew "uv" # needed by the uv entry below
 brew "yt-dlp"
 # Media player based on MPlayer and mplayer2
 brew "mpv"
@@ -117,6 +125,8 @@ brew "ninja"
 brew "node"
 # Retrieves currently playing media, and simulates media actions
 brew "nowplaying-cli"
+# Modern shell for the GitHub era
+brew "nushell"
 # Interactive GPU process monitor
 brew "nvtop"
 # Create, run, and share large language models (LLMs)
@@ -125,6 +135,8 @@ brew "ollama"
 brew "ripgrep"
 # AI coding agent, built for the terminal
 brew "opencode"
+# SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
+brew "openvpn"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Fast, disk space efficient package manager
@@ -141,12 +153,15 @@ brew "python@3.12"
 brew "redis", restart_service: :changed
 # Utility that provides fast incremental file transfer
 brew "rsync"
+brew "rust" # provides cargo, which the cargo entries below need
 # Prints a steam locomotive if you type sl instead of ls
 brew "sl"
 # SOcket CAT: netcat on steroids
 brew "socat"
 # Super fast C++ logging library
 brew "spdlog"
+# Cross-shell prompt for astronauts
+brew "starship"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
 # Opinionated Lua code formatter
@@ -161,7 +176,6 @@ brew "tesseract"
 brew "tesseract-lang"
 # Simplified and community-driven man pages
 brew "tldr"
-# Terminal multiplexer
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Parser generator tool
@@ -170,10 +184,19 @@ brew "tree-sitter-cli"
 brew "ttyd"
 # Markup-based typesetting system
 brew "typst"
+brew "uv" # needed by the uv entry below
+# Library to create, extract, and modify Windows Imaging files
+brew "wimlib"
 # Friendly and fast tool for sending HTTP requests
 brew "xh"
 # JavaScript package manager
 brew "yarn"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# A window border system for macOS
+brew "felixkratz/formulae/borders", args: ["HEAD"], trusted: true
+# Custom macOS statusbar with shell plugin, interaction and graph support
+brew "felixkratz/formulae/sketchybar", trusted: true
 # Simple hotkey daemon for macOS, written in Zig
 brew "jackielii/tap/skhd-zig"
 # App for managing battery charging. (Also installs a CLI on first use.)
@@ -207,6 +230,11 @@ cask "tailscale-app"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
 cask "wkhtmltopdf"
+cargo "bacon"
+cargo "bacon-ls"
+cargo "rustlings"
+cargo "sqlx-cli"
+cargo "tauri-cli"
 go "github.com/GoAdminGroup/adm"
 go "github.com/air-verse/air"
 go "github.com/bootdotdev/bootdev"
@@ -219,11 +247,7 @@ go "github.com/golang-migrate/migrate/v4/cmd/migrate"
 go "honnef.co/go/tools/cmd/staticcheck"
 go "github.com/swaggo/swag/cmd/swag"
 go "github.com/jackc/tern/v2"
-cargo "bacon"
-cargo "bacon-ls"
-cargo "rustlings"
-cargo "sqlx-cli"
-cargo "tauri-cli"
+uv "blender-mcp"
 uv "free-claude-code", source: "git+https://github.com/Alishahryar1/free-claude-code.git"
 npm "@anthropic-ai/claude-code"
 npm "@colbymchenry/codegraph"
@@ -231,6 +255,8 @@ npm "@google/gemini-cli"
 npm "@mariozechner/pi-coding-agent"
 npm "@openai/codex"
 npm "@opencode-ai/cli"
+npm "@opencode/cli"
 npm "reasonix"
+npm "ui-ux-pro-max-cli"
 npm "vercel"
 npm "ws"
