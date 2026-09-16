@@ -267,6 +267,63 @@ alias gst = git status
 alias gl = git log --oneline --graph --decorate -20
 alias lg = lazygit
 
+def ggpull [] { git pull origin (git branch --show-current) }
+
+# ───────────────────── structured-data helpers ──────────────────
+# Listening TCP ports:  ports | where addr =~ 8080
+def ports [] {
+    ^lsof -iTCP -sTCP:LISTEN -P -n
+    | complete | get stdout | lines | skip 1
+    | parse -r '^(?<process>\S+)\s+(?<pid>\d+)\s.*TCP (?<addr>\S+) \(LISTEN\)'
+    | update pid { into int }
+    | uniq
+}
+
+# Local branches, newest commit first:  gbr | where date < ((date now) - 30day)
+def gbr [] {
+    git for-each-ref --sort=-committerdate refs/heads --format '%(refname:short)|%(committerdate:iso8601)|%(subject)'
+    | lines
+    | split column '|' branch date subject
+    | update date { into datetime }
+}
+
+# git log as a table:  glog 200 | where subject =~ fix
+def glog [n: int = 50] {
+    git log $"-($n)" --pretty=%h»¦«%aN»¦«%s»¦«%aI
+    | lines
+    | split column "»¦«" sha author subject date
+    | update date { into datetime }
+}
+
+# Delete local branches already merged into any base branch that exists on origin (release/* kept).
+# Squash-merged PRs aren't detected by git as merged, so those branches are left alone.
+def gclean [] {
+    const base_names = [dev develop staging main master]
+    git fetch --prune --quiet
+    let bases = $base_names
+        | each {|b| $"origin/($b)" }
+        | where {|ref| (do { ^git rev-parse --verify --quiet $ref } | complete).exit_code == 0 }
+    if ($bases | is-empty) {
+        print "no dev/develop/staging/main/master branch on origin"
+        return
+    }
+    let keep = $base_names | append (git branch --show-current)
+    let merged = $bases
+        | each {|b| git branch --format '%(refname:short)' --merged $b | lines }
+        | flatten
+        | uniq
+        | where {|br| $br not-in $keep and not ($br starts-with "release/") }
+    if ($merged | is-empty) {
+        print $"nothing merged into ($bases | str join ', ')"
+        return
+    }
+    print $"merged into ($bases | str join ', '):"
+    for br in $merged { print $"  ($br)" }
+    if (input $"delete ($merged | length) local branches? [y/N] ") == "y" {
+        for br in $merged { git branch -D $br }
+    }
+}
+
 # ═══════════════════════════ PROMPT ═════════════════════════════
 $env.STARSHIP_SHELL = "nu"
 
