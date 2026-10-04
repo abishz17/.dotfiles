@@ -3,18 +3,25 @@ vim.pack.add({
 })
 
 vim.g.rustaceanvim = {
-  tools = {
-    -- rustaceanvim defaults to true. Explicit is better than implicit.
-    enable_clippy = true,
-  },
   server = {
-    on_attach = function(client, bufnr)
-      client.server_capabilities.semanticTokensProvider = nil
+    on_attach = function(_, bufnr)
+      local map = function(lhs, cmd, desc)
+        vim.keymap.set("n", lhs, function() vim.cmd.RustLsp(cmd) end, { buffer = bufnr, desc = desc })
+      end
+      map("K", { "hover", "actions" }, "Rust hover actions")
+      map("<leader>rd", "renderDiagnostic", "Rust full diagnostic (cargo style)")
+      map("<leader>re", "explainError", "Rust explain error code")
+      map("<leader>rm", { "expandMacro", "float" }, "Rust expand macro")
+      map("<leader>rr", "runnables", "Rust runnables")
+      map("<leader>rt", "testables", "Rust testables")
+      map("<leader>rg", "debuggables", "Rust debuggables")
+      map("<leader>rc", "openCargo", "Rust open Cargo.toml")
+      -- "▶ Run | Debug" above main/tests; run the one under the cursor with grx
+      vim.lsp.codelens.enable(true, { bufnr = bufnr })
     end,
     default_settings = {
       ["rust-analyzer"] = {
         cargo = {
-          allFeatures = false,
           targetDir = true,
           buildScripts = { enable = true },
         },
@@ -25,13 +32,15 @@ vim.g.rustaceanvim = {
         },
         diagnostics = {
           enable = true,
-          experimental = { enable = false },
+          -- live (no-save) type-mismatch etc. checks; may show the odd false positive
+          experimental = { enable = true },
           styleLints = { enable = false },
-          disabled = { "unused_variables","unused_mut" },
+        },
+        files = {
+          exclude = { "target", ".git" },
         },
         procMacro = {
           enable = true,
-          processes = 2,
         },
         lru = {
           capacity = 256,
@@ -54,3 +63,20 @@ vim.g.rustaceanvim = {
     },
   },
 }
+
+-- Style rust-analyzer's semantic token modifiers (needs type info, so treesitter can't do it).
+-- Re-applied on ColorScheme because :colorscheme clears custom highlights.
+local function rust_semantic_hl()
+  local err = vim.api.nvim_get_hl(0, { name = "DiagnosticError", link = false }).fg
+  vim.api.nvim_set_hl(0, "@lsp.mod.mutable.rust", { underline = true })
+  vim.api.nvim_set_hl(0, "@lsp.mod.unsafe.rust", { fg = err, bold = true })
+  vim.api.nvim_set_hl(0, "@lsp.mod.consuming.rust", { italic = true })
+end
+vim.api.nvim_create_autocmd("ColorScheme", { callback = rust_semantic_hl })
+rust_semantic_hl()
+
+-- Guide line at rustfmt's default max_width
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function() vim.opt_local.colorcolumn = "100" end,
+})
