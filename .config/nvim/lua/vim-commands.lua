@@ -15,6 +15,10 @@ vim.opt.splitbelow = true
 vim.opt.updatetime = 250
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8
+vim.opt.inccommand = "split" -- :s preview window lists off-screen matches too
+vim.opt.winborder = "rounded" -- borders on all floats (hover, signature, diagnostics)
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -25,7 +29,12 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true })
 
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+vim.keymap.set("n", "<leader>U", function()
+  if not package.loaded["undotree"] then
+    vim.cmd.packadd("nvim.undotree")
+  end
+  require("undotree").open() -- toggles: closes if already open
+end, { desc = "Toggle undotree" })
 
 
 vim.keymap.set("n", "<M-j>", ":m .+1<CR>==", { silent = true })
@@ -42,11 +51,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.keymap.set("n", "<leader>ih", function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
-end, { desc = "Toggle inlay hints" })
 
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function() vim.hl.on_yank() end,
+})
 
 vim.api.nvim_create_autocmd({ "FocusGained" }, {
   callback = function()
