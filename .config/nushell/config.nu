@@ -298,7 +298,6 @@ alias lt = eza --tree --level=2 --icons=always --group-directories-first
 alias cat = bat --style=plain
 
 alias vim = nvim
-alias opencode = opencode2
 alias gd = git diff
 alias gst = git status
 alias gl = git log --oneline --graph --decorate -20
