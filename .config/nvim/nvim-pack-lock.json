@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "Comment.nvim": {
-      "rev": "e30b7f2008e52442154b66f7c519bfd2f1e32acb",
-      "src": "https://github.com/numToStr/Comment.nvim"
-    },
     "blink.cmp": {
       "rev": "456d38d1cd3743926f329204c2340f3e7840aad6",
       "src": "https://github.com/saghen/blink.cmp"
@@ -33,10 +29,6 @@
       "rev": "40ddf37bb7ab6c04ff9e820812d1539afe691668",
       "src": "https://github.com/vidocqh/data-viewer.nvim"
     },
-    "diffview.nvim": {
-      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
-      "src": "https://github.com/sindrets/diffview.nvim"
-    },
     "flash.nvim": {
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
       "src": "https://github.com/folke/flash.nvim"
@@ -44,11 +36,6 @@
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
-    },
-    "harpoon": {
-      "rev": "87b1a3506211538f460786c23f98ec63ad9af4e5",
-      "src": "https://github.com/ThePrimeagen/harpoon",
-      "version": "'harpoon2'"
     },
     "lualine.nvim": {
       "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
@@ -69,10 +56,6 @@
     "neovim-tips": {
       "rev": "da747d41c6661c8977120a0147bfe5b90b0df7c2",
       "src": "https://github.com/saxon1964/neovim-tips"
-    },
-    "none-ls.nvim": {
-      "rev": "899e93f9f10251d7220b188eba1b837c0ba27927",
-      "src": "https://github.com/nvimtools/none-ls.nvim"
     },
     "nui.nvim": {
       "rev": "de740991c12411b663994b2860f1a4fd0937c130",
@@ -122,17 +105,9 @@
       "rev": "b3cdd746a5ca321b6884badefa0ba22c86c3d45e",
       "src": "https://github.com/nickjvandyke/opencode.nvim"
     },
-    "overseer.nvim": {
-      "rev": "f818eefff81f4b12fb7cf236f1b6c16768a2fcbc",
-      "src": "https://github.com/stevearc/overseer.nvim"
-    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
-    },
-    "present.nvim": {
-      "rev": "ce22dfaf9ebc2b37eb688e00929dfaeff126fe94",
-      "src": "https://github.com/tjdevries/present.nvim"
     },
     "render-markdown.nvim": {
       "rev": "0fd43fb4b1f073931c4b481f5f3b7cea3749e190",
@@ -155,22 +130,6 @@
       "rev": "50092d60feb242602d7578398c6eb53b4a8ffe7b",
       "src": "https://github.com/kkharji/sqlite.lua"
     },
-    "supermaven-nvim": {
-      "rev": "07d20fce48a5629686aefb0a7cd4b25e33947d50",
-      "src": "https://github.com/supermaven-inc/supermaven-nvim"
-    },
-    "telescope-fzf-native.nvim": {
-      "rev": "6fea601bd2b694c6f2ae08a6c6fab14930c60e2c",
-      "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
-    },
-    "telescope-ui-select.nvim": {
-      "rev": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2",
-      "src": "https://github.com/nvim-telescope/telescope-ui-select.nvim"
-    },
-    "telescope.nvim": {
-      "rev": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026",
-      "src": "https://github.com/nvim-telescope/telescope.nvim"
-    },
     "tiny-inline-diagnostic.nvim": {
       "rev": "57a0eb84b2008c76e77930639890d9874195b1e1",
       "src": "https://github.com/rachartier/tiny-inline-diagnostic.nvim"
@@ -178,14 +137,6 @@
     "trouble.nvim": {
       "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
       "src": "https://github.com/folke/trouble.nvim"
-    },
-    "undotree": {
-      "rev": "6fa6b57cda8459e1e4b2ca34df702f55242f4e4d",
-      "src": "https://github.com/mbbill/undotree"
-    },
-    "vague": {
-      "rev": "8751181a1aa431b4e8983b0a183afef5cbc08381",
-      "src": "https://github.com/vague-theme/vague.nvim"
     }
   }
 }

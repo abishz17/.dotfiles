@@ -15,10 +15,6 @@ require("mason-lspconfig").setup({
   automatic_enable = false,
 })
 
-vim.api.nvim_create_user_command("Mason", function(opts)
-  vim.cmd("Mason " .. opts.args)
-end, { nargs = "*", desc = "Open Mason UI" })
-
 -- Global capabilities for all servers (merges with per-server defaults)
 vim.lsp.config("*", {
   capabilities = require("blink.cmp").get_lsp_capabilities({

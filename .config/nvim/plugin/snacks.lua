@@ -7,6 +7,7 @@ Snacks.setup({
   quickfile = { enabled = true },
   input = { enabled = true },
   scroll = { enabled = true },
+  words = { enabled = true },
   indent = {
     enabled = true,
     -- disable indent guides in large files to avoid WinScrolled overhead

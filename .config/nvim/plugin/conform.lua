@@ -10,7 +10,7 @@ require("conform").setup({
     rust = { "rustfmt" },  -- direct rustfmt, not via rust-analyzer
   },
   format_after_save = {
-    lsp_fallback = false,  -- don't fall back to LSP, use formatters only
+    lsp_format = "never",  -- don't fall back to LSP, use formatters only
   },
 })
 
