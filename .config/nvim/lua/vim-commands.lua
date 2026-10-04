@@ -19,6 +19,10 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.inccommand = "split" -- :s preview window lists off-screen matches too
 vim.opt.winborder = "rounded" -- borders on all floats (hover, signature, diagnostics)
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- fold by treesitter blocks (fns, impls, ...)
+vim.opt.foldtext = "" -- folded line keeps its syntax colors
+vim.opt.foldlevel = 99 -- open files with everything unfolded
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

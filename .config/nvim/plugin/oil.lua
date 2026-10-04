@@ -29,7 +29,7 @@ end, { desc = "Open parent directory" })
 vim.keymap.set("n", "<space>-", function()
   load_oil()
   require("oil").toggle_float()
-end)
+end, { desc = "Oil (float)" })
 
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,

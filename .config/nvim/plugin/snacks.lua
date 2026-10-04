@@ -8,6 +8,8 @@ Snacks.setup({
   input = { enabled = true },
   scroll = { enabled = true },
   words = { enabled = true },
+  scope = { enabled = true }, -- ii/ai textobjects, [i/]i jumps
+  zen = { enabled = true },
   indent = {
     enabled = true,
     -- disable indent guides in large files to avoid WinScrolled overhead
@@ -22,8 +24,13 @@ Snacks.setup({
 
   picker = {
     actions = {
-      opencode_send = function(...)
-        return require("opencode").snacks_picker_send(...)
+      opencode_send = function(picker)
+        local items = vim.tbl_map(function(item)
+          return item.file
+            and require("opencode").format({ path = item.file, from = item.pos, to = item.end_pos })
+            or item.text
+        end, picker:selected({ fallback = true }))
+        require("opencode").prompt(table.concat(items, ", ") .. " ")
       end,
     },
     win = {
@@ -60,6 +67,8 @@ vim.keymap.set("n", "<leader>gf", function() Snacks.lazygit.log_file() end, { de
 vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
 vim.keymap.set("n", "<leader>gl", function() Snacks.lazygit.log() end, { desc = "Lazygit Log (cwd)" })
 vim.keymap.set("n", "<leader>un", function() Snacks.notifier.hide() end, { desc = "Dismiss All Notifications" })
+vim.keymap.set("n", "<leader>z", function() Snacks.zen() end, { desc = "Zen mode" })
+vim.keymap.set("n", "<leader>Z", function() Snacks.zen.zoom() end, { desc = "Zoom split" })
 vim.keymap.set({ "n", "t" }, "]]", function() Snacks.words.jump(vim.v.count1) end, { desc = "Next Reference" })
 vim.keymap.set({ "n", "t" }, "[[", function() Snacks.words.jump(-vim.v.count1) end, { desc = "Prev Reference" })
 
