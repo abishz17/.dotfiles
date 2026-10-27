@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Homebrew sits at a different prefix per platform: /opt/homebrew on Apple
 # Silicon, /usr/local on Intel, /home/linuxbrew/.linuxbrew on Linux. Resolve it
 # once so nothing below has to hardcode a path.
@@ -28,7 +21,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# Empty on purpose: the prompt is starship (~/.config/starship.toml), set up at the bottom.
+ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -120,15 +114,11 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting web-search)
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PATH="$BREW_PREFIX/opt/mongodb-community@5.0/bin:$PATH"
 
 export PATH="$BREW_PREFIX/opt/libpq/bin:$PATH"
 
 alias cnvim="cd $HOME/.config/nvim && nvim ."
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # bindkey -s ^f  "$HOME/.dotfiles/tab-navigator.sh\n"
 
@@ -139,7 +129,6 @@ command -v go >/dev/null && export PATH="$PATH:$(go env GOPATH)/bin"
 
 alias vim="nvim"
 alias lg="lazygit"
-alias cat="lolcat"
 
 export PATH=$PATH:$HOME/Library/Python/3.14/bin
 
@@ -232,3 +221,131 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# ═══════════════════ carried over from nushell ══════════════════
+
+export EDITOR="nvim"
+export VISUAL="nvim"
+export BAT_THEME="Catppuccin Mocha"
+export LS_COLORS="di=1;38;2;137;180;250:ln=38;2;148;226;213:ex=1;38;2;166;227;161:fi=38;2;205;214;244:or=38;2;243;139;168:pi=38;2;250;179;135:so=38;2;203;166;247:bd=38;2;249;226;175:cd=38;2;249;226;175:*.md=38;2;249;226;175:*.json=38;2;249;226;175:*.toml=38;2;249;226;175:*.yaml=38;2;249;226;175:*.yml=38;2;249;226;175:*.lock=38;2;108;112;134:*.log=38;2;108;112;134:*.zip=38;2;245;194;231:*.tar=38;2;245;194;231:*.gz=38;2;245;194;231:*.png=38;2;203;166;247:*.jpg=38;2;203;166;247:*.svg=38;2;203;166;247:*.pdf=38;2;235;160;172"
+export EZA_COLORS="da=38;2;127;132;156:uu=38;2;166;227;161:gu=38;2;148;226;213:sn=38;2;137;220;235:sb=38;2;137;220;235"
+
+alias ll="eza -l  --icons=always --group-directories-first --git --time-style=relative"
+alias la="eza -la --icons=always --group-directories-first --git --time-style=relative"
+alias lt="eza --tree --level=2 --icons=always --group-directories-first"
+alias cat="bat --style=plain"
+# oh-my-zsh's git plugin makes gl `git pull`; this keeps the log meaning used in nu.
+alias gl="git log --oneline --graph --decorate -20"
+alias ports="lsof -iTCP -sTCP:LISTEN -P -n"
+
+# ──────────────────────── fzf key bindings ──────────────────────
+#   ctrl-t  insert a file path   ·   alt-c  jump to a directory
+export FZF_DEFAULT_OPTS="--color=bg+:#313244,bg:-1,spinner:#f5e0dc,hl:#f38ba8 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 --color=selected-bg:#45475a,border:#585b70 --layout=reverse --border=rounded --info=inline"
+export FZF_CTRL_T_COMMAND="fd --type f --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_OPTS="--height 45% --prompt='  ' --preview 'bat --style=numbers --color=always --line-range :200 {}'"
+export FZF_ALT_C_COMMAND="fd --type d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_ALT_C_OPTS="--height 45% --prompt='  ' --preview 'eza --tree --level=2 --color=always --icons=always {}'"
+command -v fzf >/dev/null && source <(fzf --zsh)
+
+# ─────────────────────────── git helpers ────────────────────────
+# Delete local branches that are finished (base branches, current branch and release/* are kept):
+#   merged — merged into dev/develop/staging/main/master on origin
+#   gone   — was pushed, and its remote branch has since been deleted (squash-merged PRs)
+# oh-my-zsh's git plugin defines gclean as `git clean -id`; drop it so this function wins.
+unalias gclean 2>/dev/null
+gclean() {
+  local -a base_names bases keep candidates
+  local b
+  base_names=(dev develop staging main master)
+  git fetch --prune --quiet || return
+  keep=($base_names "$(git branch --show-current)")
+  for b in $base_names; do
+    git rev-parse --verify --quiet "origin/$b" >/dev/null && bases+=("origin/$b")
+  done
+  candidates=(${(f)"$(
+    {
+      for b in $bases; do git branch --format='%(refname:short)' --merged "$b"; done
+      git for-each-ref refs/heads --format='%(refname:short)|%(upstream:track)' | awk -F'|' '$2 == "[gone]" { print $1 }'
+    } | sort -u
+  )"})
+  candidates=(${candidates:|keep})
+  candidates=(${candidates:#release/*})
+  if (( ! $#candidates )); then
+    echo "nothing to clean"
+    return
+  fi
+  print -l $candidates
+  if read -q "?delete $#candidates local branches? [y/N] "; then
+    echo
+    git branch -D $candidates
+  else
+    echo
+  fi
+}
+
+# ─────────────────────────── processes ──────────────────────────
+# Pick processes with fzf (tab for multiple) and kill them:  killp node   ·   killp -f node
+killp() {
+  local sig=TERM picked pid
+  if [[ $1 == -f || $1 == --force ]]; then sig=KILL; shift; fi
+  # Plain substring match on the process name (not a regex), case-insensitive.
+  picked=$(ps -Arco pid,%cpu,rss,comm | awk -v n="${(L)1}" 'NR > 1 {
+    name = $0; sub(/^ *[0-9]+ +[0-9.]+ +[0-9]+ +/, "", name)
+    if (index(tolower(name), n)) print
+  }')
+  if [[ -z $picked ]]; then
+    echo "no process matching '$1'"
+    return 1
+  fi
+  picked=$(fzf --multi --header "pid  cpu  mem(KB)  name   (tab: select multiple)" <<< $picked) || return
+  for pid in ${(f)"$(awk '{ print $1 }' <<< $picked)"}; do
+    kill -$sig $pid && echo "killed $pid"
+  done
+}
+
+# ─────────────────────────── bookorbit ──────────────────────────
+# Self-hosted reading tracker in ~/personal/bookorbit (docker compose).
+#   bookorbit · bookorbit stop · bookorbit update · bookorbit logs
+_bookorbit_compose() { docker compose --project-directory "$HOME/personal/bookorbit" "$@" }
+_bookorbit_up() { [[ $(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000) == 200 ]] }
+
+# Retry a check command every second until it succeeds or 90s pass.
+_bookorbit_wait() {
+  local what=$1 deadline=$(( SECONDS + 90 ))
+  shift
+  until "$@" >/dev/null 2>&1; do
+    if (( SECONDS > deadline )); then
+      echo "$what not ready after 90s" >&2
+      return 1
+    fi
+    sleep 1
+  done
+}
+
+bookorbit() {
+  case $1 in
+    stop)   _bookorbit_compose down ;;
+    update) _bookorbit_compose pull && _bookorbit_compose up -d ;;
+    logs)   _bookorbit_compose logs -f --tail 100 app ;;
+    "")
+      # Start OrbStack + containers if needed, wait until the app answers, open it in the browser
+      if ! docker info >/dev/null 2>&1; then
+        echo "starting OrbStack…"
+        open -a OrbStack
+        _bookorbit_wait docker docker info || return
+      fi
+      _bookorbit_compose up -d || return
+      _bookorbit_wait bookorbit _bookorbit_up || return
+      open http://localhost:3000
+      ;;
+    *) echo "usage: bookorbit [stop|update|logs]" >&2; return 1 ;;
+  esac
+}
+
+# ════════════════════════ INTEGRATIONS ══════════════════════════
+#   zoxide   → `z <frecent dir>` / `zi` fuzzy jump
+#   atuin    → ctrl-r fullscreen history search (up-arrow unchanged); loaded after fzf so it owns ctrl-r
+#   starship → prompt
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
+command -v starship >/dev/null && eval "$(starship init zsh)"

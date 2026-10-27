@@ -125,8 +125,6 @@ brew "ninja"
 brew "node"
 # Retrieves currently playing media, and simulates media actions
 brew "nowplaying-cli"
-# Modern shell for the GitHub era
-brew "nushell"
 # Interactive GPU process monitor
 brew "nvtop"
 # Create, run, and share large language models (LLMs)
