@@ -20,7 +20,14 @@ vim.pack.add({
 -- exactly, and let the terminal background show through so there's no seam.
 require("rose-pine").setup({
 	variant = "moon",
-	disable_background = true,
-	disable_float_background = true,
+	-- Colors are rose-pine palette names (rose, foam, iris, muted, highlight_low, ...)
+	highlight_groups = {
+		Normal = { bg = "NONE" }, -- let kitty's background show through
+		NormalFloat = { bg = "NONE" },
+		CursorLineNr = { fg = "rose", bold = true }, -- current line number in the accent color
+		Folded = { bg = "highlight_low" }, -- faint band marks a folded line
+		FloatBorder = { fg = "highlight_high", bg = "NONE" }, -- softer popup/completion borders
+		PmenuSel = { bg = "highlight_med", bold = true }, -- selected completion item
+	},
 })
 vim.cmd("colorscheme rose-pine")

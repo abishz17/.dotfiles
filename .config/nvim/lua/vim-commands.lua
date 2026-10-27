@@ -23,6 +23,8 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- fold by treesitter blocks (fns, impls, ...)
 vim.opt.foldtext = "" -- folded line keeps its syntax colors
 vim.opt.foldlevel = 99 -- open files with everything unfolded
+-- no trailing dashes on folded lines; no ~ past end of file
+vim.opt.fillchars = { fold = " ", eob = " " }
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
