@@ -16,10 +16,3 @@ ctrl-s = "actions:split"
 command = "~/.local/bin/sessionizer-open.sh '{}'"
 mode = "execute"
 
-[actions.opencode]
-command = "~/.local/bin/sessionizer-open.sh --opencode '{}'"
-mode = "execute"
-
-[actions.split]
-command = "~/.local/bin/sessionizer-open.sh --split '{}'"
-mode = "execute"
