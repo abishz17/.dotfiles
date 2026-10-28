@@ -9,8 +9,6 @@ find ~ ~/personal ~/work -mindepth 1 -maxdepth 1 -type d -not -name '.*' 2>/dev/
 
 [keybindings]
 enter = "actions:open"
-ctrl-o = "actions:opencode"
-ctrl-s = "actions:split"
 
 [actions.open]
 command = "~/.local/bin/sessionizer-open.sh '{}'"
