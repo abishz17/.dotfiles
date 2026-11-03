@@ -21,7 +21,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# Empty on purpose: the prompt is starship (~/.config/starship.toml), set up at the bottom.
+# Empty on purpose: the prompt is plain zsh, set at the bottom.
 ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
@@ -345,7 +345,45 @@ bookorbit() {
 # ════════════════════════ INTEGRATIONS ══════════════════════════
 #   zoxide   → `z <frecent dir>` / `zi` fuzzy jump
 #   atuin    → ctrl-r fullscreen history search (up-arrow unchanged); loaded after fzf so it owns ctrl-r
-#   starship → prompt
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
-command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# ════════════════════════════ PROMPT ════════════════════════════
+# Plain zsh. Reads the branch from .git/HEAD instead of running git, so a slow
+# repo can't delay the prompt. Colors are ANSI names, so they follow the theme.
+_prompt_branch() {
+  _prompt_git=''
+  local dir=$PWD head line
+  while :; do
+    if [[ -d $dir/.git ]]; then
+      head=$dir/.git/HEAD
+      break
+    elif [[ -f $dir/.git ]]; then # worktree or submodule: .git points elsewhere
+      read -r line < $dir/.git
+      head=${line#gitdir: }
+      [[ $head == /* ]] || head=$dir/$head
+      head+=/HEAD
+      break
+    fi
+    [[ $dir == / ]] && return
+    dir=${dir:h}
+  done
+  line=''
+  [[ -r $head ]] && read -r line < $head
+  [[ -n $line ]] || return
+  if [[ $line == 'ref: refs/heads/'* ]]; then
+    line=${line#ref: refs/heads/}
+  else
+    line=${line:0:7} # detached HEAD: short commit id
+  fi
+  # A branch name is outside input: drop control characters, and double % so it
+  # can't act as a prompt code. PROMPT holds ${_prompt_git} rather than the text
+  # itself, so a name like $(cmd) is shown, never run.
+  line=${line//[[:cntrl:]]/}
+  _prompt_git=" ${line//\%/%%}"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _prompt_branch
+setopt prompt_subst
+PROMPT='%B%F{blue}%~%f%b%F{magenta}${_prompt_git}%f'$'\n''%(?.%F{green}.%F{red})❯%f '
+RPROMPT=''
