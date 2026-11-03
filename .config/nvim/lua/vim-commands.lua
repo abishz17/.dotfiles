@@ -25,6 +25,9 @@ vim.opt.foldtext = "" -- folded line keeps its syntax colors
 vim.opt.foldlevel = 99 -- open files with everything unfolded
 -- no trailing dashes on folded lines; no ~ past end of file
 vim.opt.fillchars = { fold = " ", eob = " " }
+vim.opt.list = true
+-- tab must be set too: with list on and no tab entry, tabs show up as ^I
+vim.opt.listchars = { eol = "↵", tab = "  " }
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

@@ -6,6 +6,9 @@ vim.pack.add({
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
   callback = function()
-    require('lualine').setup({})
+    require('lualine').setup({
+      options = { theme = 'kanagawa' },
+      sections = { lualine_x = { 'filetype' } }, -- only the file type on the right, like the reference look
+    })
   end,
 })
