@@ -183,6 +183,25 @@
       "skillFolderHash": "ccbc33ed119b28c3ef7b44a7e2081ab191ad63af",
       "installedAt": "2026-10-23T07:05:08.317Z",
       "updatedAt": "2026-10-23T07:05:08.317Z"
+    },
+    "blank-page": {
+      "source": "StewdioAI/blank-page",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/StewdioAI/blank-page.git",
+      "skillPath": "skills/blank-page/SKILL.md",
+      "skillFolderHash": "8faacac2cf4c2d3aa4fe9f3744b360f413a3a70c",
+      "installedAt": "2026-11-04T20:53:40.711Z",
+      "updatedAt": "2026-11-04T20:53:40.711Z"
+    },
+    "untangle-codebase": {
+      "source": "caldoai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/caldoai/skills.git",
+      "skillPath": "skills/untangle-codebase/SKILL.md",
+      "skillFolderHash": "bf2f9fc0f8dcd62103862d30260007dfecd7ea35",
+      "pluginName": "untangle-codebase",
+      "installedAt": "2026-11-05T19:26:59.997Z",
+      "updatedAt": "2026-11-05T19:26:59.997Z"
     }
   },
   "dismissed": {

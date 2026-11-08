@@ -173,20 +173,6 @@ export PATH="$BREW_PREFIX/opt/llvm/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 
-# Kitty icat alias
-alias icat="kitty +kitten icat"
-
-# Kitty power tools (kittens)
-alias hg="kitten hyperlinked-grep"     # ripgrep with jump-to-line in editor
-alias ssh="kitten ssh"                 # full kitty features over SSH
-alias push="kitten transfer --direction=upload"    # upload to remote/container
-alias pull="kitten transfer --direction=download"  # pull from remote/container
-alias rfile="kitten remote-file"       # edit remote/container files in local editor
-alias kdiff="kitten diff"              # visual diff for images/PDFs/text
-alias kclip="kitten clipboard"         # clipboard history with filters
-
-
-
 # Sessionizer — Ctrl+F to launch
 sessionizer() {
   tv sessionizer
